@@ -62,8 +62,13 @@
           </p>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
+          <p class="masternode-tag">MasterNode Info [Coins Required / Worth]</p>
+          <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
+          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }}</p>
+        </div>
+        <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="price-tag">Circulating Supply</p>
-          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.selectedSupply }} {{ selectedCryptoCurrency.symbol }}</p>
+          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.selectedSupply }} ${{ selectedCryptoCurrency.symbol }}</p>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="price-tag">Market Cap</p>
@@ -132,7 +137,7 @@ export default {
       return Number(this.selectedCryptoCurrency.market_cap_usd)
     },
     percentageOfMarketCap () {
-      const percentageOfMarketCap = Math.round((this.selectedCryptoCurrency.market_cap_usd / this.sharedState.totalMarketCapUSD) * 100)
+      const percentageOfMarketCap = Math.round((this.selectedCryptoCurrency.stats.cmc.market_cap_usd/ this.sharedState.totalMarketCapUSD) * 100) //burası
       return `~ ${percentageOfMarketCap}% of the global cryptocurrency market cap!`
     }
   },
@@ -388,11 +393,28 @@ $large: 1024px;
       text-align: left;
       padding: 20px 0;
 
+
       @media screen and (max-width: $medium) {
         text-align: center;
       }
 
       .price-tag {
+        font-weight: bold;
+        color: #ff9900;
+      }
+
+      .masternode-tag {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ff9900;
+      }
+
+      .masternode-info-tag {
+        color: #ff9900;
+      }
+
+      .masternode-amount {
+        font-size: 40px;
       }
 
       .price-select-tag {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="columns" style="margin: 0px 10px">
-      <div v-for="cryptoCurrency in secondFiveCryptoCurrencies" class="column">
+      <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
         <router-link :to="`/${cryptoCurrency.coin}`">
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
@@ -10,7 +10,7 @@
               </figure>
             </div>
             <div class="card-content">
-              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ (cryptoCurrency.CoinInfo !== undefined)  ? cryptoCurrency.CoinInfo.FullName : cryptoCurrency.name}}</p>
+              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.stats.cmc.id.toUpperCase() }}</p>
               <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
                 <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="columns" style="margin: 0px 10px">
-      <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
+      <div v-for="cryptoCurrency in secondFiveCryptoCurrencies" class="column">
         <router-link :to="`/${cryptoCurrency.coin}`">
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
@@ -32,7 +32,7 @@
               </figure>
             </div>
             <div class="card-content">
-              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ (cryptoCurrency.CoinInfo !== undefined)  ? cryptoCurrency.CoinInfo.FullName : cryptoCurrency.name}}</p>
+              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.stats.cmc.id.toUpperCase() }}</p>
               <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
                 <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
@@ -87,6 +87,7 @@ export default {
       return Number(priceUsd).toFixed(2)
     },
     getPercentChange (cryptoCurrency) {
+      this.getDifferenceInChange (cryptoCurrency);
       return cryptoCurrency.percentChange24h
     }
   }

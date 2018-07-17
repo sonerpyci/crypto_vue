@@ -16,11 +16,11 @@ export const store = {
     cryptoCurrencies: []
   },
   getCryptoCurrencies: function () {
-    let coinFilter = ["Dash","Pivx","Bitg","xzc","pac","bsd","SIB"];  //Syscoin- Xsn- Phr-
+    let coinFilter = ["Dash","Pivx","Bitg","xzc","pac","bsd","SIB", "smart", "ION", "GIN"];
       for (let i = 0; i<coinFilter.length; i++) {
         get(this.cryptoCompareUrl + coinFilter[i]).then((response) => {
           this.state.cryptoCurrencies.push(response.data);
-        });
+        }) ;
       }
       console.log( this.state.cryptoCurrencies);
       this.state.cryptoCurrencies.forEach( (cryptoCurrency) => {
