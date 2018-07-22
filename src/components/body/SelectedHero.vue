@@ -45,11 +45,6 @@
         <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="price-tag price-select-tag">Current Price</p>
           <div class="control" :class="{'hide': isOpenedInIFrame}">
-            <div class="select">
-              <select v-model="selectedFiatCurrency" @change="selectFiatCurrency($event)">
-                <option v-for="fiatCurrency in fiatCurrencies">{{ fiatCurrency }}</option>
-              </select>
-            </div>
           </div>
           <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedFiatCurrency }} {{ selectedCryptoCurrency.selectedPrice }}
             <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange}">
@@ -62,57 +57,24 @@
             </span>
           </p>
         </div>
-
-
-
-        <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="masternode-tag">Weekly Change</p>
-          <br>
-          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">
-            <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange7d, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange7d}">
-              ({{ selectedCryptoCurrency.percentChange7d }}%)
-              <sub>
-                <a class="is-primary percent-tooltip tooltip"><icon name="info-circle" height="15" width="15"></icon>
-                  <span class="tooltiptext">7 day percent change</span>
-                </a>
-              </sub>
-            </span>
-          </p>
-        </div>
-
-
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="masternode-tag">MasterNode Info [Coins Required / Worth]</p>
           <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
           <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }}</p>
         </div>
-        <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="price-tag">Circulating Supply</p>
-          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.selectedSupply }} ${{ selectedCryptoCurrency.symbol }}</p>
+        <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
+          <p class="masternode-tag">Income Info</p>
+          <ul class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">
+            <li class="income">Daily:  <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.dailyIncome }} $</span></li>
+            <li class="income">Weekly: <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.weeklyIncome }} $</span></li>
+            <li class="income">Monthly:  <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.monthlyIncome }} $</span></li>
+          </ul>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="price-tag">Market Cap</p>
-          <div class="">
-            <div class="price-amount market-cap-price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedFiatCurrency }} {{ selectedCryptoCurrency.selectedMarketCap }}
-              <div class="doughnut-chart doughnut-tooltip tooltip" :class="{'hide': isOpenedInIFrame || !sharedState.totalMarketCapUSD}">
-                <doughnut-chart
-                  :data="{
-                    labels:['Total Market Cap USD', `Selected Crypto Currency Market Cap`],
-                    datasets:[
-                      { data: [globalMarketCapUSD, selectedCryptoCurrencyMarketCap],
-                        backgroundColor: [
-                          '#370628',
-                          '#fd6721'
-                        ]
-                      }]}"
-                  :width="125"
-                  :height="50">
-                </doughnut-chart>
-                <span class="tooltiptext">{{ percentageOfMarketCap }}</span>
-              </div>
-            </div>
-          </div>
+          <p class="price-tag">Roi</p>
+          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}"><span :class="'positive-percent-change'" >{{ selectedCryptoCurrency.roi }}%</span></p>
         </div>
+
       </div>
     </div>
   </div>
@@ -168,18 +130,14 @@ export default {
     },
     selectCryptoCurrency: function () {
       let cryptoCurrency
-      console.log(this.sharedState.cryptoCurrencies)
-
       if (this.sharedState.cryptoCurrencies.length === 0 || !this.sharedState.cryptoCurrencies) {
         this.axios.get(`https://masternodes.pro/apiv2/coin/stats/${this.$route.params.id}/`)
           .then(response => {
-            console.log(response.data)
             cryptoCurrency = response.data
             cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
             this.selectedCryptoCurrency = this.addImageAndDescription(cryptoCurrency)
-          }).catch((err) => {console.log(err)})
+          }).catch((err) => {/*console.log(err)*/})
       } else {
-        console.log('else')
         cryptoCurrency = this.sharedState.cryptoCurrencies.filter((obj) => {
           return obj.coin === this.$route.params.id
         })[0]
@@ -197,8 +155,7 @@ export default {
         })
     },
     manipulateCryptoCurrency (cryptoCurrency) {
-      console.log(cryptoCurrency);//
-      cryptoCurrency.selectedPrice = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(2)
+      cryptoCurrency.selectedPrice = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3)
       cryptoCurrency.selectedSupply = Number(cryptoCurrency.stats.cmc.available_supply).toLocaleString()
       cryptoCurrency.selectedMarketCap = Number(cryptoCurrency.stats.cmc.market_cap_usd).toLocaleString()
       return cryptoCurrency
@@ -211,9 +168,10 @@ export default {
       cryptoCurrency.github = cryptoCurrency.mnpdata.sites.coin_github;
       cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1);
       cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '');
-      cryptoCurrency.positivePercentChange7d = !(cryptoCurrency.stats.cmc.percent_change_7d.toString().indexOf('-') > -1);
-      cryptoCurrency.percentChange7d = cryptoCurrency.stats.cmc.percent_change_7d.toString().replace(/^-/, '');
-      console.log(cryptoCurrency)
+      cryptoCurrency.dailyIncome = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(4);
+      cryptoCurrency.weeklyIncome = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(4);
+      cryptoCurrency.monthlyIncome = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(4);
+      cryptoCurrency.roi = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
       return cryptoCurrency
     }
   }
@@ -224,6 +182,13 @@ export default {
 $small: 590px;
 $medium: 768px;
 $large: 1024px;
+
+
+.income {
+  color: pink;
+}
+
+
 
 .selected-section {
   position: relative;

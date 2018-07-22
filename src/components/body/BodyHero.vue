@@ -66,15 +66,10 @@ export default {
   },
   computed: {
     firstFiveCryptoCurrencies () {
-      // console.log(this.sharedState.cryptoCurrencies)
-      // let result = Object.entries(this.sharedState.cryptoCurrencies).slice(0, 30).map(entry => entry[1])
       return this.sharedState.cryptoCurrencies.slice(0, 5)
-      // return result.slice(0, 5)
     },
     secondFiveCryptoCurrencies () {
-      //  let result = Object.entries(this.sharedState.cryptoCurrencies).slice(0, 30).map(entry => entry[1])
       return this.sharedState.cryptoCurrencies.slice(5)
-      //  return result.slice(5)
     }
   },
   methods: {
@@ -84,7 +79,7 @@ export default {
     },
     getPriceUSD (cryptoCurrency) {
       const priceUsd = cryptoCurrency.stats.cmc.price_usd
-      return Number(priceUsd).toFixed(2)
+      return Number(priceUsd).toFixed(3)
     },
     getPercentChange (cryptoCurrency) {
       this.getDifferenceInChange (cryptoCurrency);

@@ -2,12 +2,12 @@
   <div class="hero-foot">
     <footer class="footer">
       <div class="mobile-footer">
-        <div class="made-by" :class="{'hide': isOpenedInIFrame}">Made by <a href="https://github.com/djirdehh" target="_blank">Hassan Djirdeh</a> | <icon name="calendar" height="12"></icon> 2017</div>
-        <p class="wallet-tag">BTC <span>1cV9YMjpweZyJ17DJbTa1WELs4BjdmUMp</span></p>
-        <p class="wallet-tag">ETH <span >0x5af8dfc441d4068f705372f461a85aba49aa5f46</span></p>
+        <div class="made-by" :class="{'hide': isOpenedInIFrame}">Made by <a href="#" target="_blank"> </a> | <icon name="calendar" height="12"></icon> 2018</div>
+        <p class="wallet-tag">BTC <span>Not Yet</span></p>
+        <p class="wallet-tag">ETH <span>Not Yet</span></p>
       </div>
       <div class="desktop-footer" :class="{'hide': isOpenedInIFrame}">
-        <a href="https://chrome.google.com/webstore/search/cryptovue" target="_blank" class="button is-medium"><img :src="`/static/chrome-webstore.png`" style="height: 50px"/></a>
+        <a href="#" target="_blank" class="button is-medium"><img :src="``" style=""/></a>
       </div>
     </footer>
   </div>
@@ -59,7 +59,7 @@ $large: 1024px;
     }
 
     @media screen and (max-width: $small) {
-      display: block;
+      display: none;
     }
 
     .wallet-tag {
@@ -73,8 +73,7 @@ $large: 1024px;
   }
 
   .desktop-footer {
-    display: block;
-
+    display: none;
     .button {
       float: right;
       padding: 10px;

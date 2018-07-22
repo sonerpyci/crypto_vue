@@ -31,7 +31,7 @@ export const store = {
               }
               catch(err){
 
-                console.log('Error found in currency:  ' , temp);
+                //console.log('Error found in currency:  ' , temp);
               }
 
               responses.push(temp);
@@ -47,7 +47,6 @@ export const store = {
 
   },
   getDifferenceInChange (cryptoCurrency) {
-    console.log('getDif  ' , cryptoCurrency );
     cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1)
     cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '')
   },
