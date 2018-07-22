@@ -6,13 +6,13 @@
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
               <figure class="image is-4by3">
-                <img :src="`${cryptoCurrency.stats.logo}`">
+                <img class="formatted-image" :src="`${cryptoCurrency.stats.logo}`">
               </figure>
             </div>
             <div class="card-content">
               <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.stats.cmc.id.toUpperCase() }}</p>
               <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ cryptoCurrency.percentChange24h/*getPercentChange(cryptoCurrency)*/ }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
                   <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
                 </span>
@@ -28,13 +28,13 @@
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
               <figure class="image is-4by3">
-                <img :src="`${cryptoCurrency.stats.logo}`">
+                <img class="formatted-image" :src="`${cryptoCurrency.stats.logo}`">
               </figure>
             </div>
             <div class="card-content">
               <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.stats.cmc.id.toUpperCase() }}</p>
               <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ cryptoCurrency.percentChange24h/*getPercentChange(cryptoCurrency)*/ }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
                   <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
                 </span>
@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     getDifferenceInChange (cryptoCurrency) {
-      cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.indexOf('-') > -1)
-      cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '')
+      //cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.indexOf('-') > -1)
+      //cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '')
     },
     getPriceUSD (cryptoCurrency) {
       const priceUsd = cryptoCurrency.stats.cmc.price_usd
@@ -129,12 +129,19 @@ $large: 1024px;
         @media screen and (max-width: $small) {
           height: 90%;
           width: 90%;
-          margin: 0 auto;
         }
       }
     }
   }
-
+  .formatted-image {
+    bottom: 0;
+    left: 31%;
+    position: absolute;
+    right: 0;
+    top: 16%;
+    height: 42% !important;
+    width: 38% !important;
+  }
   .card-image-iframe {
     .image {
       top: -23px;
@@ -149,6 +156,15 @@ $large: 1024px;
       bottom: 15%;
       left: 0;
       right: 0;
+      @media screen and (min-width: $large) {
+        font-size: 2vw;
+      }
+      @media screen and (max-width: $medium) {
+        font-size: 4vw;
+      }
+      @media screen and (max-width: $small) {
+        font-size: 10px;
+      }
     }
 
     .title-iframe {

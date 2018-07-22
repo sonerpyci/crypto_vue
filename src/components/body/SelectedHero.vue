@@ -1,4 +1,5 @@
-<template>
+<template >
+  <div v-if="typeof selectedCryptoCurrency.coin !== 'undefined'">
     <div class="columns selected-section" :class="{'no-padding': isOpenedInIFrame}">
       <router-link to="/" class="nav-item">
         <div class="return-action" :class="{'return-action-iframe': isOpenedInIFrame}">
@@ -7,7 +8,7 @@
         </div>
       </router-link>
       <div class="column is-7 image-section">
-        <img :src="`${selectedCryptoCurrency.stats.logo}`" class="cryptoCurrency-image" :class="{'cryptoCurrency-image-iframe': isOpenedInIFrame}"/>
+        <img  :src="`${selectedCryptoCurrency.stats.logo}`" class="cryptoCurrency-image" :class="{'cryptoCurrency-image-iframe': isOpenedInIFrame}"/>
         <h1 class="cryptoCurrency-title" :class="{'cryptoCurrency-title-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.cmc.id.toUpperCase() }}</h1>
         <span class="tag is-primary" :class="{'tag-iframe': isOpenedInIFrame}">Rank {{ selectedCryptoCurrency.stats.cmc.rank}}</span>
         <p class="cryptoCurrency-description" :class="{'cryptoCurrency-description-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.description }}</p>
@@ -61,6 +62,25 @@
             </span>
           </p>
         </div>
+
+
+
+        <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
+          <p class="masternode-tag">Weekly Change</p>
+          <br>
+          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">
+            <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange7d, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange7d}">
+              ({{ selectedCryptoCurrency.percentChange7d }}%)
+              <sub>
+                <a class="is-primary percent-tooltip tooltip"><icon name="info-circle" height="15" width="15"></icon>
+                  <span class="tooltiptext">7 day percent change</span>
+                </a>
+              </sub>
+            </span>
+          </p>
+        </div>
+
+
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="masternode-tag">MasterNode Info [Coins Required / Worth]</p>
           <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
@@ -95,6 +115,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -188,8 +209,10 @@ export default {
       cryptoCurrency.website = cryptoCurrency.href;
       cryptoCurrency.paper = cryptoCurrency.mnpdata.sites.coin_ann;
       cryptoCurrency.github = cryptoCurrency.mnpdata.sites.coin_github;
-      cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.indexOf('-') > -1);
-      cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '');
+      cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1);
+      cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '');
+      cryptoCurrency.positivePercentChange7d = !(cryptoCurrency.stats.cmc.percent_change_7d.toString().indexOf('-') > -1);
+      cryptoCurrency.percentChange7d = cryptoCurrency.stats.cmc.percent_change_7d.toString().replace(/^-/, '');
       console.log(cryptoCurrency)
       return cryptoCurrency
     }
