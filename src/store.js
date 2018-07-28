@@ -26,15 +26,15 @@ export const store = {
             get(this.cryptoCompareUrl + coinFilter[i]).then((response) => {
               //this.state.cryptoCurrencies.push(response.data);
               let temp = response.data;
-              console.log(response);
               try{
                 if(temp != null)
                   this.getPercentChange (temp);
               }
               catch(err){
-
-                //console.log('Error found in currency:  ' , temp);
+                console.log('Error found in currency:  ' , temp);
               }
+              if(coinFilter[i] === 'Dash')
+                temp.stats.logo = "/static/dash_large_logo.png";
               if(temp != null)
                 responses.push(temp);
 
