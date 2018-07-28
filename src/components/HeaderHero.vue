@@ -4,7 +4,7 @@
       <div class="container">
         <div class="nav-left">
           <router-link to="/" class="nav-item" :class="{'hide': isOpenedInIFrame}">
-            <img src="" class="app-logo" /> <p class=""><span></span></p>
+            <img src="" class="app-logo" /> <p class="">Master<span>Nodeum</span></p>
           </router-link>
         </div>
         <div class="nav-right nav-menu">
@@ -23,36 +23,35 @@
           <header class="modal-card-head"></header>
           <section class="modal-card-body">
             <div class="content">
-              <h3> CryptoVue </h3>
+              <h3> MasterNodeum </h3>
               <img src="/static/app-logo.png" class="modal-body-logo" id="app-logo"/>
-              <p>Cryptocurrencies emerged in 2009 with the first decentralized cryptocurrency - <a href="https://bitcoin.org/en/" target="_blank">Bitcoin</a>. As of today - more than 700 digital currencies exist with a total market capitalization greater than 100 billion USD. </p>
-              <p><a target="_blank">CryptoVue</a> is a real-time dashboard that displays the top 10 cryptocurrencies based on currency price, market capitalization and overall circulating supply - obtained from the leading cryptocurrency resource <a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a>.</p>
+              <p>Cryptocurrencies emerged in 2009 with the first decentralized cryptocurrency - <a href="https://bitcoin.org/en/" target="_blank">Bitcoin</a> Buraya Yazı gelir  </p>
+              <p><a target="_blank">MAsterNodeum</a> Buraya Yazı gelir  Buraya Yazı gelir  Buraya Yazı gelir  Buraya Yazı gelir  Buraya Yazı gelir   <a href="https://.com/" target="_blank"></a>.</p>
               <h3>Vue</h3>
               <img src="/static/vue_logo.png" class="modal-body-logo" id="vue-logo" />
-              <p>Built as a weekend project, this was a great introduction in  understanding the common concepts of <a href="https://vuejs.org/" target="_blank">Vue</a> (reusable single-file components, vue-router, templating, etc.). </p>
-              <p style="padding-bottom: 10px">Styling of the application was done with <a href="http://bulma.io/" target="_blank">Bulma</a> (Flexbox based CSS framework) and SASS. Head over to the my <a href="https://github.com/djirdehh/crypto_vue" target="_blank">github page</a> to see the entire scaffold and feel free to reach out with any comments/questions!</p>
+              <p> <a href="https://vuejs.org/" target="_blank">Vue</a> (reusable single-file components, vue-router, templating, etc.). </p>
+              <p style="padding-bottom: 10px">Styling of the application was done with <a href="http://bulma.io/" target="_blank">Bulma</a> (Flexbox based CSS framework) and SASS.  <a href="" target="_blank"></a> </p>
             </div>
           </section>
           <footer class="modal-card-foot">
             <div class="content has-text-centered">
-              <div class="footer-title">Hassan Djirdeh | <icon name="calendar" height="12"></icon> 2017</div>
+              <div class="footer-title">MasterNodeum | <icon name="calendar" height="12"></icon> 2018</div>
               <div class="footer-social-media">
-                <a class="icon" href="http://hassandjirdeh.com" target="_blank">
+                <a class="icon" href="" target="_blank">
                   <icon name="h-square" scale="2"></icon>
                 </a>
-                <a class="icon" href="https://github.com/djirdehh" target="_blank">
+                <a class="icon" href="" target="_blank">
                   <icon name="github-square" scale="2"></icon>
                 </a>
-                 <a class="icon" href="https://ca.linkedin.com/in/hassandjirdeh" target="_blank">
+                 <a class="icon" href="" target="_blank">
                   <icon name="linkedin-square" scale="2"></icon>
                 </a>
-                <a class="icon" href="mailto:hassan.djirdeh@mail.utoronto.ca" target="_blank">
+                <a class="icon" href="mailto:ozantde@gmail.com" target="_blank">
                   <icon name="envelope-square" scale="2"></icon>
                 </a>
               </div>
               <div class="wallet-content">
-                <p class="wallet-tag" @click="displayBTC">BTC? <span v-if="showBTCWallet" class="wallet-id">1cV9YMjpweZyJ17DJbTa1WELs4BjdmUMp</span></p>
-                <p class="wallet-tag" @click="displayETH">ETH? <span v-if="showETHWallet" class="wallet-id">0x5af8dfc441d4068f705372f461a85aba49aa5f46</span></p>
+            
               </div>
             </div>
           </footer>
