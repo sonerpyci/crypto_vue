@@ -1,8 +1,8 @@
 {
   "name": "crypto_vue",
   "version": "1.0.0",
-  "description": "A Vue.js project on cryptocurrency",
-  "author": "djirdehh <hassan.djirdeh@mail.utoronto.ca>",
+  "description": "MasterNodeum Project",
+  "author": "masternodeum master@masternodeum.com",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
