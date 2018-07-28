@@ -149,6 +149,7 @@ $large: 1024px;
     .title {
       position: absolute;
       bottom: 15%;
+      color:#4e4f51;
       left: 0;
       right: 0;
       @media screen and (min-width: $large) {
@@ -176,7 +177,9 @@ $large: 1024px;
 
       .positive-percent-change {
         font-size: 0.9em;
-        color: #00d1b2;
+        color: #156b20;
+        //color: #20E10B;
+        font-weight: bold;
 
         .arrow-down {
           display: none;
@@ -186,6 +189,8 @@ $large: 1024px;
       .negative-percent-change {
         font-size: 0.9em;
         color: #ff3860;
+        font-weight: bold;
+        font-weight: bold;
 
         .arrow-up {
           display: none;

@@ -118,7 +118,7 @@ $large: 1024px;
 
       .app-logo-name {
         font-size: 18px;
-        color: #FFF;
+        color:#4e4f51 !important;
         letter-spacing: 5px;
         padding-top: 2px;
 
@@ -136,7 +136,6 @@ $large: 1024px;
       top: 0;
       left: inherit;
     }
-
     .nav-item {
       .iframe-app-logo {
         max-height: 25px;
@@ -145,6 +144,7 @@ $large: 1024px;
       }
 
       .button {
+        color:#4e4f51 !important;
         &:hover {
           color: #fd6721;
         }

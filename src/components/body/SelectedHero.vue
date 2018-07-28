@@ -50,7 +50,7 @@
             <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange}">
               ({{ selectedCryptoCurrency.percentChange24h }}%)
               <sub>
-                <a class="is-primary percent-tooltip tooltip"><icon name="info-circle" height="15" width="15"></icon>
+                <a class="is-primary percent-tooltip tooltip" style="color:#4e4f51 "><icon name="info-circle" height="15" width="15"></icon>
                   <span class="tooltiptext">24h percent change</span>
                 </a>
               </sub>
@@ -58,9 +58,9 @@
           </p>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="masternode-tag">MasterNode Info [Coins Required / Worth]</p>
+          <p class="masternode-tag">MasterNode Info [Coins Required / Worth $]</p>
           <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
-          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }}</p>
+          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }} $</p>
         </div>
         <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="masternode-tag">Income Info</p>
@@ -185,7 +185,7 @@ $large: 1024px;
 
 
 .income {
-  color: pink;
+  color: #cc22af;
 }
 
 
@@ -207,6 +207,7 @@ $large: 1024px;
 
     .arrow-left {
       padding-right: 5px;
+      color:#4e4f51;
     }
 
     .arrow-left-iframe {
@@ -215,6 +216,7 @@ $large: 1024px;
 
     .return-text {
       font-size: 11px;
+      color:#4e4f51;
 
       @media screen and (max-width: $medium) {
         display: none;
@@ -252,6 +254,7 @@ $large: 1024px;
 
     .cryptoCurrency-title {
       font-size: 20px;
+      color:#4e4f51;
       font-weight: 600;
     }
 
@@ -268,6 +271,7 @@ $large: 1024px;
       line-height: 1.65;
       max-width: 450px;
       display: block;
+      color:#4e4f51;
       margin: 0 auto;
       padding: 20px 0 30px;
 
@@ -286,6 +290,7 @@ $large: 1024px;
     }
 
     .icons-section {
+      color: #4e4f51;
       height: 0px;
 
       .icon {
@@ -362,7 +367,8 @@ $large: 1024px;
 
           .nav-item {
             font-size: 11px;
-            color: #1e1335;
+            //color: #1e1335;
+            color:#4e4f51;
             -o-transition: .5s;
             -ms-transition: .5s;
             -moz-transition: .5s;
@@ -388,21 +394,22 @@ $large: 1024px;
 
       .price-tag {
         font-weight: bold;
-        color: #ff9900;
+        color: #108dc7;
       }
 
       .masternode-tag {
         font-size: 20px;
         font-weight: bold;
-        color: #ff9900;
+        color: #108dc7;
       }
 
       .masternode-info-tag {
-        color: #ff9900;
+        color: #108dc7;
       }
 
       .masternode-amount {
         font-size: 40px;
+        color:#4e4f51;
       }
 
       .price-select-tag {
@@ -436,9 +443,10 @@ $large: 1024px;
 
       .price-amount {
         font-size: 40px;
+        color:#4e4f51;
 
         .positive-percent-change {
-          color: #00d1b2;
+          color: #156b20;
         }
 
         .negative-percent-change {

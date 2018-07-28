@@ -38,10 +38,32 @@ html, body {
   height: 100%;
 }
 
-.is-success {
+/*.is-success {
   background: #333;
   background: -webkit-linear-gradient(left top, #024, #402);
   background: -moz-linear-gradient(bottom right, #024, #402);
   background: linear-gradient(to bottom right, #024, #402);
+}*/
+/*
+.is-success {
+background: #333;
+background: -webkit-linear-gradient(left top, #ef8e38, #108dc7);
+background: -moz-linear-gradient(bottom right, #ef8e38, #108dc7);
+background: linear-gradient(to bottom right, #ef8e38, #108dc7);
+}*/
+
+
+.is-success {
+background: #333;
+background: -webkit-linear-gradient(left top, #ef8e38, #108dc7);
+background: -moz-linear-gradient(bottom right, #ef8e38, #108dc7);
+background: linear-gradient(to bottom right, #ffffcc 0%, #99ccff 116%);
 }
+
+/*.is-success {
+  background-image: url("stars.jpg");
+  background-size: cover;
+  background-repeat:   no-repeat;
+  background-position: center;
+}*/
 </style>
