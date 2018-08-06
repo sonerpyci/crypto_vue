@@ -179,8 +179,62 @@
       "paper": "https://www.cardanohub.org/en/academic-papers/",
       "github": "https://github.com/input-output-hk/cardano-sl/"
    },
+   "bitg": {
+    "description": "Bitcoin Green (BITG) is a sustainable cryptocurrency modeled after Satoshi Nakamoto’s original vision for Bitcoin.As you understand from name It is a decentralized, peer-to-peer transactional currency designed to offer a solution to the problematic exponential increase in energy consumed by Bitcoin and other proof-of-work currencies.Bitcoin Green designed to have a total supply of 21 million coins    ",
+    "website": "https://www.savebitcoin.io",
+    "paper": "",
+    "github": ""
+    },
+    "bsd": {
+        "description": "Bitsend (BSD)(Formerly known as LIMX Coin until 2014) is a cryptocurrency based on a peer-to-peer network and Bitcoin Core.Main function is to handle online and instant payments.Bitsend is a German company.Bitsend also focuses to online gaming technologies and payments .Bitsend designed to have a total supply of 20.3 million coins.",
+        "website": "https://www.bitsend.info",
+        "paper": "",
+        "github": ""
+    },
+    "sib": {
+        "description": "Siberian Coin (SIBcoin)short form of Siberian Chernovets is a decentralized payment system which is created as a Dash fork in Russia on 2015.This is formed as an alternative to Bitcoin especially for the Russian market.The project team has stated that its primary goal has always been to develop a cryptocurrency that could be understood, accepted and used by average people.The big Russian online shops, but also online shops from other countries like Ali express, already accept the coin as a means of payment.SIBcoin designed to have a total supply of 16.9 million coin",
+        "website": "https:// www.sibcoin.money",
+        "paper": "",
+        "github": ""
+    }, 
+    "gin": {
+        "description": "GINcoin (GIN) is an open source, decentralized, peer to peer cryptocurrency that is similar to Dash. This coin uses Masternodes technology and so it has features like Instant Send (Instant transactions) and Private Send (private transactions).The main goal of this project is to democratize the way Masternodes are created. While GINcoin is a cryptocurrency that features instant and anonymous transactions this one has a working platform and it is a turnkey masternode coin. It means this platform offers users an easy way of setting up Masternode in just a few clicks. GINcoin designed to have a total supply of 10.5 million coins",
+        "website": "https://www.gincoin.io",
+        "paper": "",
+        "github": ""
+    },
+    "pac": {
+        "description": "PACCoin (PAC) was originally founded by William Corliss back in 2013 and was known as PacCoin – Pacifica Nation’s official coin.After that rebranded to People's Alternative Choice Coin.PACcoin is a peer to peer, open source cryptocurrency and it focuses alternative payment model to Bitcoin.PACcoin designed to have a total supply of 4.772 billion coins ",
+        "website": "https://www.paccoin.net",
+        "paper": "",
+        "github": ""
+    },
+    "smart": {
+        "description": "SmartCash (SMART) is a community-driven peer to peer , open source cryptocurrency forked from Zcash projects  on 2017. Smart Cash prioritizes privacy and fast transaction times, with the goal of achieving merchant adoption. The project’s defining feature is its distrust of central authority, even forgoing a foundation or core team.SmartCash designed to have a total supply of 1.664 billion coins ",
+        "website": "https://www.smartcash.cc",
+        "paper": "",
+        "github": ""
+    },
+    "ion": {
+        "description": "IONOMY (ION)  is a decentralized, peer-to-peer transactional currency designed for online gaming platforms.Ionomy thus represents Ion’s internal economy driven and powered by ION currency that serves the purpose of being spent, exchanged and earned through different rewarding protocols. Within the Ionomy project, all gamers can earn rewards given in form of ION coins.ION's uses Proof-of-Stake process for distribute ION coins. Ionomy (ION) designed to have a total supply of 27.7 million coins",
+        "website": "https://www.ionomy.com",
+        "paper": "",
+        "github": ""
+    },
+    "xzc": {
+        "description": "Zcoin (XZC) or Zerocoin, is an open source decentralized cryptocurrency that focuses on achieving privacy and anonymity for its users while transacting with Zerocoin protocol.Zcoin is a cryptographic extension to Bitcoin that extends the protocol to enable completely anonymous foreign exchange transactions.Zcoin (XZC) designed to have a total supply of 21.4 million coins ",
+        "website": "https://www.zcoin.io",
+        "paper": "",
+        "github": ""
+    },
+    "block": {
+        "description": "Hmmm. Should be updated in due time!",
+        "website": "https://www.blocknet.co/",
+        "paper": "",
+        "github": ""
+    },
    "undefined": {
-      "description": "Hmmm. Though the price, circulating supply and market cap values are accurate - there doesn't appear to be any detailed data captured on this cryptocurrency. Should be updated in due time!",
+      "description": "Hmmm. Should be updated in due time!",
       "website": "",
       "paper": "",
       "github": ""

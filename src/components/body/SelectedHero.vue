@@ -161,7 +161,7 @@ export default {
       return cryptoCurrency
     },
     addImageAndDescription (cryptoCurrency) {
-      cryptoCurrency.id =  cryptoCurrency.stats.cmc.id in cryptoCurrencyData ? cryptoCurrency.stats.cmc.id : undefined;
+      cryptoCurrency.id =  cryptoCurrency.stats.cmc.id in cryptoCurrencyData ? cryptoCurrency.stats.cmc.id : cryptoCurrency.coin;
       cryptoCurrency.description = cryptoCurrencyData[cryptoCurrency.id].description;
       cryptoCurrency.website = cryptoCurrency.href;
       cryptoCurrency.paper = cryptoCurrency.mnpdata.sites.coin_ann;
