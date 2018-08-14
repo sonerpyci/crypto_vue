@@ -1,0 +1,3 @@
+masternodes.pro 
+	fiyat virgülden sonra---
+	

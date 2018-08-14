@@ -9,7 +9,7 @@
       </router-link>
       <div class="column is-7 image-section">
         <img  :src="`${selectedCryptoCurrency.stats.logo}`" class="cryptoCurrency-image" :class="{'cryptoCurrency-image-iframe': isOpenedInIFrame}"/>
-        <h1 class="cryptoCurrency-title" :class="{'cryptoCurrency-title-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.cmc.id.toUpperCase() }}</h1>
+        <h1 class="cryptoCurrency-title" :class="{'cryptoCurrency-title-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.cmc.name.toUpperCase() }}</h1>
         <span class="tag is-primary" :class="{'tag-iframe': isOpenedInIFrame}">Rank {{ selectedCryptoCurrency.stats.cmc.rank}}</span>
         <p class="cryptoCurrency-description" :class="{'cryptoCurrency-description-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.description }}</p>
         <div class="icons-section">
@@ -161,8 +161,8 @@ export default {
       return cryptoCurrency
     },
     addImageAndDescription (cryptoCurrency) {
-      cryptoCurrency.id =  cryptoCurrency.stats.cmc.id in cryptoCurrencyData ? cryptoCurrency.stats.cmc.id : cryptoCurrency.coin;
-      cryptoCurrency.description = cryptoCurrencyData[cryptoCurrency.id].description;
+      cryptoCurrency.id =  cryptoCurrency.stats.cmc.name in cryptoCurrencyData ? cryptoCurrency.stats.cmc.name : cryptoCurrency.coin;
+      cryptoCurrency.description = cryptoCurrencyData[cryptoCurrency.name].description;
       cryptoCurrency.website = cryptoCurrency.href;
       cryptoCurrency.paper = cryptoCurrency.mnpdata.sites.coin_ann;
       cryptoCurrency.github = cryptoCurrency.mnpdata.sites.coin_github;
