@@ -25,13 +25,8 @@
             <div class="content">
               <h3> MasterNodeum </h3>
               <img src="/static/app-logo.png" class="modal-body-logo" id="app-logo"/>
-              <p>The most important thing that human beings invent in the world is internet. The second thing after that is certainly cryptocurrencies for us. Cryptocurrencies emerged in 2009 with the first decentralized cryptocurrency - <a href="https://bitcoin.org/en/" target="_blank">Bitcoin</a>  21 million pieces are coded and blocked on the internet. In order to get those pieces(mining), people need to invest on expensive hardwares.  </p>
-              <p><a target="_blank">MasterNodeum</a>  Our job is to inform the people first and to help them to make money by starting the new generation mining, masternode systems, from the beginning to this day. It is our other purpose to publish the contents by contacting the Masternode companies and inform them about the related people through our site. In addition, taking care to work with non-fraudulent, secure companies,
-and we only get ads from companies that match this definition.<a href="https://www.masternodeum.com/" target="_blank"></a>.</p>
-              <h3>Vue</h3>
-              <img src="/static/vue_logo.png" class="modal-body-logo" id="vue-logo" />
-              <p> <a href="https://vuejs.org/" target="_blank">Vue</a> (reusable single-file components, vue-router, templating, etc.). </p>
-              <p style="padding-bottom: 10px">Styling of the application was done with <a href="http://bulma.io/" target="_blank">Bulma</a> (Flexbox based CSS framework) and SASS.  <a href="" target="_blank"></a> </p>
+              <p> <a href="https://www.masternodeum.com/" target="_blank">MasterNodeum</a>  is a site that holding the market for the next generation of mining offering a system that you can be aware of fast, reliable and up-to-date developments. </p>
+              <p><a target="_blank">MasterNodeum</a>  <a href="https://www.masternodeum.com/" target="_blank"></a> In addition, taking care to work with non-fraudulent, secure companies, and we only get ads from companies that match this definition</p>
             </div>
           </section>
           <footer class="modal-card-foot">

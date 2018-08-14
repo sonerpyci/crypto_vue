@@ -19,7 +19,7 @@ export const store = {
   getCryptoCurrencies: function () {
     let promises = [];
     let responses = [];
-    let coinFilter = ["Dash","block","Bitg","xzc","pac","bsd","SIB", "smart", "ION", "GIN"];
+    let coinFilter = ["Dash","block","Bitg","xzc","pac","bsd","xsn","smart", "ION", "GIN"];
       for (let i = 0; i<coinFilter.length; i++) {
         promises.push(
           new Promise ( (resolve, reject) => {
@@ -28,16 +28,16 @@ export const store = {
               let temp = response.data;
               console.log(temp);
               try{
-                if(temp != null)
+                if( (typeof temp === "object") && (temp !== null) )
                   this.getPercentChange (temp);
               }
               catch(err){
-                console.log('Error found in currency:  ' , temp);
+                console.log('Error found in currency:  ' , coinFilter[i] );;
               }
               if(coinFilter[i] === 'Dash')
                 temp.stats.logo = "/static/dash_large_logo.png";
 
-              if(temp != null)
+                if( (typeof temp === "object") && (temp !== null) )
                 responses.push(temp);
               resolve();
             }).catch(reject)
