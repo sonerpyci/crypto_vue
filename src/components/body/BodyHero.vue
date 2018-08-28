@@ -1,5 +1,24 @@
-<template>
+<template id="template">
   <div>
+    <div id="demo">
+      <!-- <form id="search">
+         Search <input name="query" v-model="searchQuery">
+       </form>-->
+       <demo-grid
+         :data="firstFiveCryptoCurrencies"
+         :columns="firstFiveCryptoCurrencies"
+         :filter-key="''">
+       </demo-grid>
+     </div>
+    <!-- <div id="kekk">
+       <div class="sort-orders">
+         <a class="sort-orders" v-for="sortkey in Object.keys(orderedListOptions)" v-on:click="sortOrder = sortkey" v-bind:class="{active: sortOrder == sortkey}">{{sortkey}}</a>
+       </div>
+         <div v-for="(cryptoCurrency, index) in this.sharedState.cryptoCurrencies" class="row">
+           <img  :src="`${cryptoCurrency.stats.logo}`" class="row-image" :class="{'cryptoCurrency-image-iframe': isOpenedInIFrame}"/>
+           {{cryptoCurrency.coin}} {{getPriceUSD(cryptoCurrency)}}$
+         </div>
+     </div>-->
     <div class="columns" style="margin: 0px 10px">
       <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
         <router-link :to="`/${cryptoCurrency.coin}`">
@@ -45,11 +64,12 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
 import { store } from '../../store.js'
-
+import Vue from 'vue'
 export default {
   props: {},
   name: 'bodyHero',
@@ -70,6 +90,13 @@ export default {
     },
     secondFiveCryptoCurrencies () {
       return this.sharedState.cryptoCurrencies.slice(5)
+    },
+    orderedListOptions: function(){
+      return {
+        "Popularity": () => { return this.list },
+        "A-Z": () => { return this.list.slice().sort() },
+        "Z-A": () => { return this.list.slice().sort().reverse()},
+      }
     }
   },
   methods: {
@@ -84,6 +111,9 @@ export default {
     getPercentChange (cryptoCurrency) {
       this.getDifferenceInChange (cryptoCurrency);
       return cryptoCurrency.percentChange24h
+    },
+    sort: function(sortOrder){
+      return this.orderedListOptions[sortOrder]()
     }
   }
 }
@@ -226,5 +256,59 @@ $large: 1024px;
         transform: rotateY(-360deg);
 
     }
+}
+
+table {
+  border: 2px solid #42b983;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+th {
+  background-color: #42b983;
+  color: rgba(255,255,255,0.66);
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+th, td {
+  min-width: 120px;
+  padding: 10px 20px;
+}
+
+th.active {
+  color: #fff;
+}
+
+th.active .arrow {
+  opacity: 1;
+}
+
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  opacity: 0.66;
+}
+
+.arrow.asc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #fff;
+}
+
+.arrow.dsc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #fff;
 }
 </style>

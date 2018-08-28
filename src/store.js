@@ -19,7 +19,7 @@ export const store = {
   getCryptoCurrencies: function () {
     let promises = [];
     let responses = [];
-    let coinFilter = ["Dash","block","Bitg","xzc","pac","bsd","xsn","smart", "ION", "GIN"];
+    let coinFilter = ["Dash","Bitg","xzc","pac","bsd","xsn","smart", "ION", "GIN"];
       for (let i = 0; i<coinFilter.length; i++) {
         promises.push(
           new Promise ( (resolve, reject) => {
@@ -35,7 +35,7 @@ export const store = {
                 console.log('Error found in currency:  ' , coinFilter[i] );;
               }
               if(coinFilter[i] === 'Dash')
-                temp.stats.logo = "/static/dash_large_logo.png";
+                temp.stats.Logo = "/static/dash_large_logo.png";
 
                 if( (typeof temp === "object") && (temp !== null) )
                 responses.push(temp);
@@ -54,6 +54,17 @@ export const store = {
   getDifferenceInChange (cryptoCurrency) {
     cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1)
     cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '')
+    cryptoCurrency['Coins Required']= cryptoCurrency.stats.masterNodeCoinsRequired;
+    cryptoCurrency['Current Price'] = Number(Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3))
+    cryptoCurrency['Worth'] = cryptoCurrency.stats.masterNodeWorth
+    cryptoCurrency['Daily Income'] = Number(Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(4));
+    cryptoCurrency['Weekly Income'] = Number(Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(4));
+    cryptoCurrency['Monthly Income'] = Number(Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(4));
+    cryptoCurrency['Roi'] = Number(Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2));
+    if(cryptoCurrency.coin === 'dash')
+      cryptoCurrency['Logo'] = "/static/dash_large_logo.png";
+    else
+      cryptoCurrency['Logo'] = cryptoCurrency.stats.logo;
   },
   addImageAndDescription(cryptoCurrency) {
     cryptoCurrency.id =  cryptoCurrency.stats.cmc.id in cryptoCurrencyData ? cryptoCurrency.stats.cmc.id : undefined;
@@ -63,6 +74,7 @@ export const store = {
     cryptoCurrency.github = cryptoCurrency.mpndata.sites.coin_github;
     cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.indexOf('-') > -1);
     cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '');
+
   },
   getTotalMarketCapUSD() {
     const getUrl = 'https://api.coinmarketcap.com/v1/global/'

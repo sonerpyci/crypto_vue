@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import BodyHero from './components/body/BodyHero.vue'
 import SelectedHero from './components/body/SelectedHero.vue'
+import GridHero from './components/body/gridHero.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ export default new VueRouter({
   routes: [
     {
       path: '',
-      component: BodyHero
+      component: GridHero//BodyHero
     },
     {
       path: '/:id',

@@ -17,6 +17,9 @@ export default {
   components: {
     HeaderHero,
     FooterHero
+  },
+  data: {
+    windowHeight: window.height
   }
 }
 </script>
