@@ -55,12 +55,13 @@ export const store = {
     cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1)
     cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '')
     cryptoCurrency['Coins Required']= cryptoCurrency.stats.masterNodeCoinsRequired;
-    cryptoCurrency['Current Price'] = Number(Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3))
-    cryptoCurrency['Worth'] = cryptoCurrency.stats.masterNodeWorth
-    cryptoCurrency['Daily Income'] = Number(Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(4));
-    cryptoCurrency['Weekly Income'] = Number(Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(4));
-    cryptoCurrency['Monthly Income'] = Number(Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(4));
-    cryptoCurrency['Roi'] = Number(Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2));
+    cryptoCurrency['Current Price'] = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3)
+    cryptoCurrency['Worth'] = Number(cryptoCurrency.stats.masterNodeWorth).toFixed(2)
+    cryptoCurrency['Daily Income'] = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Weekly Income'] = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Monthly Income'] = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Roi'] = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
+    cryptoCurrency['Master Node Count'] = Number(cryptoCurrency.advStats.masterNodeCount);
     if(cryptoCurrency.coin === 'dash')
       cryptoCurrency['Logo'] = "/static/dash_large_logo.png";
     else

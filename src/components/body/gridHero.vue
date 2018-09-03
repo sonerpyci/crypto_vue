@@ -24,7 +24,7 @@
       </div>
     </div>
     <form id="search">
-   Search <input id="searchInput" name="query" autocomplete="off" placeholder="Type something to filter" v-model="searchQuery" @keydown.enter.prevent="">
+      <font-awesome-icon icon="search-dollar" /> <input id="searchInput" name="query" autocomplete="off" placeholder="Type something to filter" v-model="searchQuery" @keydown.enter.prevent=""/>
  </form>
       <demo-grid
         :data="allCryptoCurrencies"
@@ -37,16 +37,119 @@
 </template>
 
 <script>
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  import { library } from '@fortawesome/fontawesome-svg-core'
+  import { faSearchDollar } from '@fortawesome/free-solid-svg-icons'
+  library.add(faSearchDollar)
   import { store } from '../../store.js'
+  import router from '../../routes.js'
   import Vue from 'vue'
-
+  Vue.component('font-awesome-icon', FontAwesomeIcon);
+  Vue.component('demo-grid', {
+    template: '  <table id="mytable">\n' +
+    '    <thead id="mythead">\n' +
+    '      <tr id="mytr" >\n' +
+    '        <th id="myth" v-for="key in columns"\n' +
+    '          @click="sortBy(key)"\n' +
+    '          :class="[{ active: sortKey == key}, key ]">\n' +
+    '          {{ key | capitalize }}\n'+
+    '          <br><span class="arrow" :class="sortOrders[key] > 0 ? \'asc\' : \'dsc\'">\n' +
+    '          </span>\n' +
+    '        </th>\n' +
+    '      </tr>\n' +
+    '    </thead>\n' +
+    '    <tbody id="mytbody">\n' +
+    '      <tr @click="rowClick(entry.coin)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
+    '        <td id="mytd" v-for="key in columns" :class="key" v-if="key == \'Logo\' ">\n' +
+    '        \t<figure class="image is-4by3 myTableLogo">\n' +
+    '          \t<img class="formatted-image" :src=entry[key]>\n' +
+    '          </figure>\n' +
+    '        </td>\n' +
+    '        <td id="mytd" :class="key" v-else-if="key == \'Current Price\' ">\n' +
+    '          {{entry[key]}} <span class="MyDollar">$ </span>\n' +
+    '        </td>\n' +
+    '        <td id="mytd" :class="key" v-else>\n' +
+    '          {{entry[key]}}\n' +
+    '        </td>\n' +
+    '      </tr>\n' +
+    '    </tbody>\n' +
+    '  </table>',
+    //template : '#grid-template',// Aslında template'in ayrı durup güzelce linklenmesi gerek ama ne yapsam yaramadı...
+    props: {
+      data: Array,
+      columns: Array,
+      filterKey: String
+    },
+    data: function () {
+      var sortOrders = {}
+      this.columns.forEach(function (key) {
+        sortOrders[key] = 1
+      })
+      return {
+        sortKey: '',
+        sortOrders: sortOrders
+      }
+    },
+    computed: {
+      filteredData: function () {
+        var sortKey = this.sortKey
+        var filterKey = this.filterKey && this.filterKey.toLowerCase()
+        var order = this.sortOrders[sortKey] || 1
+        var data = this.data
+        if (filterKey) {
+          data = data.filter(function (row) {
+            return Object.keys(row).some(function (key) {
+              return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+            })
+          })
+          return data
+        }
+        if (sortKey && sortKey !== 'Logo') {
+          console.log(sortKey);
+          if ((sortKey === 'coin')) {
+            data = data.slice().sort(function (a, b) {
+              a = a[sortKey]
+              b = b[sortKey]
+              return (a === b ? 0 : a > b ? 1 : -1) * order
+            })
+          }
+          else {
+            data = data.slice().sort(function (a, b) {
+              a = Number(a[sortKey])
+              b = Number(b[sortKey])
+              return (a === b ? 0 : a > b ? 1 : -1) * order
+            })
+          }
+          console.log(this.data)
+          return data
+        } else {
+          return this.data
+        }
+      }
+    },
+    filters: {
+      capitalize: function (str) {
+        return str//.charAt(0).toUpperCase() + str.slice(1)
+      }
+    },
+    methods: {
+      sortBy: function (key) {
+        this.sortKey = key
+        this.sortOrders[key] = this.sortOrders[key] * -1
+      },
+      rowClick: function (coin) {
+        console.log(coin);
+        router.push({ path: coin })
+      }
+    }
+  });
   export default {
     props: {},
     name: 'gridHero',
     data () {
       return {
         searchQuery: '',
-        gridColumns : ['Logo','coin', 'Coins Required', 'Current Price', 'Worth', 'Daily Income', 'Weekly Income', 'Monthly Income', 'Roi'],
+        gridColumns : ['Logo','coin', 'Coins Required', 'Current Price', 'Worth', 'Daily Income', 'Weekly Income', 'Monthly Income', 'Roi', 'Master Node Count'],
         sharedState: store.state,
         isOpenedInIFrame: false
       }
@@ -123,7 +226,6 @@
         height: 100px;
       }
     }
-
     .fiveCoins{
       @media screen and (max-width: $medium) {
         display: none;

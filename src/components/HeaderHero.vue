@@ -12,7 +12,7 @@
             <a class="enjoy-css" :class="{'hide': isOpenedInIFrame}" @click="div_show">
               <span class="headerSpan">Subscription</span>
             </a>
-            <link async href="http://fonts.googleapis.com/css?family=Advent%20Pro" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+            <link async href="https://fonts.googleapis.com/css?family=Advent%20Pro" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
           </span>
         </div>
         <div class="nav-right nav-menu">
