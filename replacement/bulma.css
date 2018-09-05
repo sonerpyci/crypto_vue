@@ -276,7 +276,7 @@ table th {
   border: 2px solid #fd6721;
 }
 @media screen and (max-width: 1100px) {
-  .Weekly.Income {
+  .Yearly.Income {
     max-width: 300px;
     display: none;
     margin: 0 auto;
