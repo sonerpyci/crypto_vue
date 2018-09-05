@@ -68,7 +68,7 @@
           <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency['Master Node Count'] }}</p>
         </div>
         <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="masternode-tag">Income [Dollar Based - Coin Based]</p>
+          <p class="masternode-tag">Income [USD Based - Coin Based]</p>
           <ul class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">
             <li class="income">Daily:  <span :class="{'positive-percent-change': selectedCryptoCurrency['Daily Income'] , 'negative-percent-change': !selectedCryptoCurrency['Daily Income']}">{{ selectedCryptoCurrency['Daily Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['DailyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
             <li class="income">Weekly: <span :class="{'positive-percent-change': selectedCryptoCurrency['Weekly Income'] , 'negative-percent-change': !selectedCryptoCurrency['Weekly Income']}">{{ selectedCryptoCurrency['Weekly Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['WeeklyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
