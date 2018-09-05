@@ -61,12 +61,15 @@
     '    <tbody id="mytbody">\n' +
     '      <tr @click="rowClick(entry.coin)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
     '        <td id="mytd" v-for="key in columns" :class="key" v-if="key == \'Logo\' ">\n' +
-    '        \t<figure class="image is-4by3 myTableLogo">\n' +
+    '        \t<figure class=" myTableLogo">\n' +
     '          \t<img class="formatted-image" :src=entry[key]>\n' +
     '          </figure>\n' +
     '        </td>\n' +
-    '        <td id="mytd" :class="key" v-else-if="key == \'Current Price\' ">\n' +
-    '          {{entry[key]}} <span class="MyDollar">$ </span>\n' +
+    '        <td id="mytd" :class="key" v-else-if="key == \'Current Price\' /*|| key == \'Yearly Income\'  || key == \'Monthly Income\' || key == \'Daily Income\' */">\n' +
+    '          {{entry[key]}} <span class="MyDollar">$</span>\n' +
+    '        </td>\n' +
+    '        <td id="mytd" :class="key" v-else-if="key == \'coin\' ">\n' +
+    '          {{entry[key].toUpperCase()}}\n' +
     '        </td>\n' +
     '        <td id="mytd" :class="key" v-else>\n' +
     '          {{entry[key]}}\n' +
@@ -149,7 +152,7 @@
     data () {
       return {
         searchQuery: '',
-        gridColumns : ['Logo','coin', 'Coins Required', 'Current Price', 'Worth', 'Daily Income', 'Weekly Income', 'Monthly Income', 'Roi', 'Master Node Count'],
+        gridColumns : ['Logo','coin', 'Coins Required', 'Current Price', 'Worth', 'Daily Income', 'Monthly Income', 'Yearly Income', 'Roi', 'Master Node Count'],
         sharedState: store.state,
         isOpenedInIFrame: false
       }

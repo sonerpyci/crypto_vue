@@ -58,16 +58,22 @@
           </p>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="masternode-tag">MasterNode Info [Coins Required / Worth $]</p>
+          <p class="masternode-tag">MasterNode Info [Coins Required / Worth($)]</p>
           <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
           <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }} $</p>
         </div>
+        <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
+          <p class="masternode-tag">Active MasterNode Count</p>
+          <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
+          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency['Master Node Count'] }}</p>
+        </div>
         <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
-          <p class="masternode-tag">Income Info</p>
+          <p class="masternode-tag">Income [Dollar Based - Coin Based]</p>
           <ul class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">
-            <li class="income">Daily:  <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.dailyIncome }} $</span></li>
-            <li class="income">Weekly: <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.weeklyIncome }} $</span></li>
-            <li class="income">Monthly:  <span :class="{'positive-percent-change': selectedCryptoCurrency.dailyIncome , 'negative-percent-change': !selectedCryptoCurrency.dailyIncome}">{{ selectedCryptoCurrency.monthlyIncome }} $</span></li>
+            <li class="income">Daily:  <span :class="{'positive-percent-change': selectedCryptoCurrency['Daily Income'] , 'negative-percent-change': !selectedCryptoCurrency['Daily Income']}">{{ selectedCryptoCurrency['Daily Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['DailyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
+            <li class="income">Weekly: <span :class="{'positive-percent-change': selectedCryptoCurrency['Weekly Income'] , 'negative-percent-change': !selectedCryptoCurrency['Weekly Income']}">{{ selectedCryptoCurrency['Weekly Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['WeeklyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
+            <li class="income">Monthly:  <span :class="{'positive-percent-change': selectedCryptoCurrency['Monthly Income'] , 'negative-percent-change': !selectedCryptoCurrency['Monthly Income']}">{{ selectedCryptoCurrency['Monthly Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['MonthlyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
+            <li class="income">Yearly:  <span :class="{'positive-percent-change': selectedCryptoCurrency['Yearly Income'] , 'negative-percent-change': !selectedCryptoCurrency['Yearly Income']}">{{ selectedCryptoCurrency['Yearly Income']}} $<span class="incomeHyphen"> - </span>({{selectedCryptoCurrency['YearlyIncomeBasedCoin']}} {{selectedCryptoCurrency.coin.toUpperCase()}})</span></li>
           </ul>
         </div>
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
@@ -168,10 +174,25 @@ export default {
       cryptoCurrency.github = cryptoCurrency.mnpdata.sites.coin_github;
       cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1);
       cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '');
-      cryptoCurrency.dailyIncome = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(4);
-      cryptoCurrency.weeklyIncome = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(4);
-      cryptoCurrency.monthlyIncome = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(4);
       cryptoCurrency.roi = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
+      cryptoCurrency['Coins Required']= cryptoCurrency.stats.masterNodeCoinsRequired;
+      cryptoCurrency['Current Price'] = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3)
+      cryptoCurrency['Worth'] = Number(cryptoCurrency.stats.masterNodeWorth).toFixed(2)
+      cryptoCurrency['Daily Income'] = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(3);
+      cryptoCurrency['DailyIncomeBasedCoin'] = Number(cryptoCurrency.stats.income.daily/cryptoCurrency.stats.cmc.price_usd).toFixed(2);
+      cryptoCurrency['Weekly Income'] = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(3);
+      cryptoCurrency['WeeklyIncomeBasedCoin'] = Number(cryptoCurrency.stats.income.weekly/cryptoCurrency.stats.cmc.price_usd).toFixed(2);
+      cryptoCurrency['Monthly Income'] = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(3);
+      cryptoCurrency['MonthlyIncomeBasedCoin'] = Number(cryptoCurrency.stats.income.monthly/cryptoCurrency.stats.cmc.price_usd).toFixed(2);
+      cryptoCurrency['Yearly Income'] = Number(cryptoCurrency.stats.income.yearly.toString().replace(/^-/, '')).toFixed(3);
+      cryptoCurrency['YearlyIncomeBasedCoin'] = Number(cryptoCurrency.stats.income.yearly/cryptoCurrency.stats.cmc.price_usd).toFixed(2);
+      console.log(cryptoCurrency['YearlyIncomeBasedCoin']);
+      cryptoCurrency['Roi'] = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
+      cryptoCurrency['Master Node Count'] = Number(cryptoCurrency.advStats.masterNodeCount);
+      if(cryptoCurrency.coin === 'dash')
+        cryptoCurrency['Logo'] = "/static/dash_large_logo.png";
+      else
+        cryptoCurrency['Logo'] = cryptoCurrency.stats.logo;
       return cryptoCurrency
     }
   }
@@ -188,7 +209,9 @@ $large: 1024px;
   color: #cc22af;
 }
 
-
+.incomeHyphen{
+  color: #121212;
+}
 
 .selected-section {
   position: relative;

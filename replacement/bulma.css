@@ -324,6 +324,9 @@ table th {
   #myth:not(span){
     font-size: 0.7rem;
   }
+  #mytd.Logo {
+    padding: 10px 10px !important;
+  }
 }
 @media screen and (max-width: 400px) {
   #mytd {
@@ -332,6 +335,9 @@ table th {
   #myth:not(span){
     font-size: 0.6rem;
   }
+  #mytd.Logo {
+    padding: 10px 10px !important;
+  }
 }
 @media screen and (max-width: 360px) {
   #mytd {
@@ -339,6 +345,9 @@ table th {
   }
   #myth:not(span){
     font-size: 0.5rem;
+  }
+  #mytd.Logo {
+    padding: 10px 10px !important;
   }
 }
 
@@ -366,6 +375,14 @@ table th {
 
 #myth.active .arrow {
   opacity: 1;
+}
+
+.myTableLogo {
+  min-width: 35px;
+  min-height: 35px;
+}
+.MyDollar {
+  text-align: center;
 }
 
 .arrow {
