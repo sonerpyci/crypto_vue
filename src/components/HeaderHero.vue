@@ -87,18 +87,26 @@
             <input id="email" name="email" class="subscribeInput" placeholder="example@example.com" type="text" required>
           </span>
           <span class="formGroup phoneGroup">
-            <label for="phone">Phone</label>
-           <span class="telGroup"><v-select id="v-select" class="Select-option" style="width: 20px;"
-                                            v-model="selectedCountry"
-                                            :options="countryList"
-                                            label="label"
-                                            item-text="label"
-                                            item-value="id"
-                                            return-object></v-select>
-            <input type="tel" id="phone" name="phone" class="subscribeInput"
-                   placeholder="123-456-7890"
-                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                   required /></span>
+            <span style="display: inline-block">
+              <label for="v-select" style="margin: 25px;">Country</label>
+              <label for="phone" style="margin: 50px;">Phone</label>
+            </span>
+           <span class="telGroup">
+             <v-select id="v-select"  class="Select-option"
+                                      v-model="selectedCountry"
+                                      :options="countryList"
+                                      label="label"
+                                      text="label"
+                                      item-value="id"
+                                      v-on:change="countrySelect"
+                                      return-object >
+
+             </v-select>
+             <input type="tel" id="phone" name="phone" class="subscribeInput"
+                    placeholder="123-456-7890"
+                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    required />
+           </span>
           </span>
           <a href="#" @click="check_empty" id="submit">Send</a>
         </form>
@@ -145,12 +153,15 @@ export default {
       this.showETHWallet = true
     },
     check_empty() {
-      if (document.getElementById('name').value == "" || document.getElementById('email').value == "" ) {
+      if (document.getElementById('name').value === "" || document.getElementById('email').value === "" ) {
         alert("Fill All Fields !");
       } else {
         return this.subscription_post();//returnu kaldır
-        alert("Form Submitted Successfully...");
       }
+    },
+    countrySelect(){
+      console.log("selected");
+      document.getElementById('phone').value = '+'+ this.selectedCountry.TELEFON_KODU
     },
 //Function To Display Popup
     div_show() {
@@ -177,16 +188,19 @@ export default {
     },
 //Function to Post Subscription Popup Data
     subscription_post(){
-      let data ={"name": document.getElementById('name').value,
-                                        "surname":document.getElementById('surname').value,
-                                        "phone":document.getElementById('phone').value,
-                                        "email":document.getElementById('email').value,
-                                        "country_id":this.selectedCountry.id};
+      let data = {
+        "name": document.getElementById('name').value,
+        "surname":document.getElementById('surname').value,
+        "phone": '+' + this.selectedCountry.TELEFON_KODU + document.getElementById('phone').value,
+        "email":document.getElementById('email').value,
+        "country_id":this.selectedCountry.id
+      };
       this.axios.post('http://localhost:3000/subscribers', data)
         .then(response => {
           console.log(response);
           if(response.data.success == true){
             this.div_hide();
+            alert("Form Submitted Successfully...");
           }else{
             alert("An Error Encountered");
           }
@@ -263,14 +277,23 @@ v-select{
     height: 30px !important;
     margin-top: 4px !important;
 }
+  .dropdown-toggle.clearfix {
+    cursor: text;
+    height: 30px !important;
+    margin-top: 4px !important;
+    margin-left: 10px;
+    width: 95% !important;
+    font-size: .9rem;
+  }
 .dropdown.v-select.single.searchable{
-  width: 60px !important;
-  height: 29px !important;
+  width: 44% !important;
+  height: 30px !important;
   margin-top: 4px;
   max-height: 60px;
 }
   .dropdown-menu{
     max-height: 60px!important;
+    font-size: .5rem !important;
   }
   .open ul {
     max-height: 50px!important;
@@ -626,7 +649,9 @@ hr {
   outline: none;
   box-shadow: 0 0 2.5pt 1.7pt #42b983;
 }
-
+input#phone{
+  width: 50% !important;
+}
 #name {
   background-repeat:no-repeat;
   background-position:5px 7px;
