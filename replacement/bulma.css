@@ -325,7 +325,7 @@ table th {
     font-size: 0.7rem;
   }
   #mytd.Logo {
-    padding: 10px 10px !important;
+   padding: 10px 10px !important;
   }
 }
 @media screen and (max-width: 400px) {
@@ -348,7 +348,7 @@ table th {
   }
   #mytd.Logo {
     padding: 10px 10px !important;
-  }
+   }
 }
 
 #mytd {
@@ -376,15 +376,13 @@ table th {
 #myth.active .arrow {
   opacity: 1;
 }
-
 .myTableLogo {
   min-width: 35px;
   min-height: 35px;
-}
-.MyDollar {
+  }
+  .MyDollar {
   text-align: center;
 }
-
 .arrow {
   display: inline-block;
   vertical-align: middle;

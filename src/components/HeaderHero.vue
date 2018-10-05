@@ -4,7 +4,7 @@
       <div class="container">
         <div class="nav-left">
           <router-link to="/" class="nav-item" :class="{'hide': isOpenedInIFrame}">
-            <img src="" class="app-logo" /> <p class=""><span class="headerSpan">MasterNodeum</span></p>
+            <img src="/static/app-logo.png" class="app-logo" /> <p class="app-logo-name"><span class="headerSpan">MasterNodeum</span></p>
           </router-link>
         </div>
         <div class="nav-center">
