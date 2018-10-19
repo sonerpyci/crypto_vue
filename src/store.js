@@ -14,6 +14,13 @@ export const store = {
   state: {
     isCurrenciesReady: false,
     totalMarketCapUSD: 0,
+    isBtcReady:false,
+    btcDominance: 0,
+    btc: {},
+    statusArray : [
+      'Active',
+      'Maintenance'
+    ],
     cryptoCurrencies: []
   },
   getCryptoCurrencies: function () {
@@ -46,7 +53,6 @@ export const store = {
         )
       }
       Promise.all(promises).then(() => {
-        console.log(responses);
         this.state.cryptoCurrencies = responses;
       });
 
@@ -63,6 +69,8 @@ export const store = {
     cryptoCurrency['Yearly Income'] = Number(cryptoCurrency.stats.income.yearly.toString().replace(/^-/, '')).toFixed(3);
     cryptoCurrency['Roi'] = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
     cryptoCurrency['Master Node Count'] = Number(cryptoCurrency.advStats.masterNodeCount);
+    //let randomNumber = Math.floor(Math.random()*this.state.statusArray.length);
+    cryptoCurrency['Status'] = this.state.statusArray[0];
     if(cryptoCurrency.coin === 'dash')
       cryptoCurrency['Logo'] = "/static/dash_large_logo.png";
     else
@@ -79,14 +87,41 @@ export const store = {
 
   },
   getTotalMarketCapUSD() {
+    let promises = [];
     const getUrl = 'https://api.coinmarketcap.com/v1/global/'
-    axios.get(getUrl).then((response) => {
-      const globalData = response.data
-      this.state.totalMarketCapUSD = globalData.total_market_cap_usd
-    })
+    promises.push(
+      new Promise ( (resolve, reject) => {
+        get(getUrl).then((response) => {
+          const globalData = response.data
+          this.state.totalMarketCapUSD = globalData.total_market_cap_usd
+          this.state.btcDominance = globalData.bitcoin_percentage_of_market_cap
+          resolve();
+        }).catch(reject)
+      })
+    );
+    Promise.all(promises).then(() => {
+      this.state.isBtcReady = true
+    });
   },
   getPercentChange (cryptoCurrency) {
     this.getDifferenceInChange (cryptoCurrency);
     return cryptoCurrency.percentChange24h
-  }
+  }/*,
+  getBtcInfo (fiatCurrencyEvent) {
+    this.selectedFiatCurrency = 'USD';
+    let promises = [];
+    promises.push(
+      new Promise ( (resolve, reject) => {
+        get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`).then((cryptoCurrency) => {
+          this.state.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          this.state.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
+          resolve();
+        }).catch(reject)
+      })
+    );
+    Promise.all(promises).then(() => {
+      console.log(this.state.btc)
+    });
+  }*/
+
 }

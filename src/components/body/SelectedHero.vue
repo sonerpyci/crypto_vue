@@ -14,13 +14,13 @@
         <p class="cryptoCurrency-description" :class="{'cryptoCurrency-description-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.description }}</p>
         <div class="icons-section">
           <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_website" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_website" target="_blank"><icon name="link" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_website" target="_blank"><icon name="link" scale="1.5"></icon><p>{{selectedCryptoCurrency.stats.cmc.name}} Official</p></a>
           </span>
           <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_ann" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_ann" target="_blank"><icon name="file-text" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_ann" target="_blank"><icon name="file-text" scale="1.5"></icon><p>BTC Talk</p></a>
           </span>
           <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_github" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_github" target="_blank"><icon name="github" scale="1.5"></icon></a>
+            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_github" target="_blank"><icon name="github" scale="1.5"></icon><p>Github Repository</p></a>
           </span>
         </div>
       </div>

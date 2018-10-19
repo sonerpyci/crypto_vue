@@ -1,118 +1,158 @@
 <template>
-  <div class="hero-head">
-    <header class="nav" :class="{'nav-iframe': isOpenedInIFrame}">
-      <div class="container">
-        <div class="nav-left">
-          <router-link to="/" class="nav-item" :class="{'hide': isOpenedInIFrame}">
-            <img src="/static/app-logo.png" class="app-logo" /> <p class="app-logo-name"><span class="headerSpan">MasterNodeum</span></p>
-          </router-link>
-        </div>
-        <div class="nav-center">
-          <span class="nav-item" :class="{'hide': isOpenedInIFrame}">
-            <a class="enjoy-css" :class="{'hide': isOpenedInIFrame}" @click="div_show">
-              <span class="headerSpan">Subscription</span>
-            </a>
-            <link async href="https://fonts.googleapis.com/css?family=Advent%20Pro" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
-          </span>
-        </div>
-        <div class="nav-right nav-menu">
-          <span class="nav-item">
-            <img src="/static/app-logo.png" class="iframe-app-logo" :class="{'show': isOpenedInIFrame}"/>
-            <a class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" @click="toggleModal">
-              <span class="headerSpan">What's this?</span>
-            </a>
-          </span>
-        </div>
-      </div>
-    </header>
-    <div class="modal" :class="{'is-active': modalActive}">
-      <div class="modal-background" @click="toggleModal"></div>
-        <div class="modal-card">
-          <header class="modal-card-head"></header>
-          <section class="modal-card-body">
-            <div class="content">
-              <h3> MasterNodeum </h3>
-              <img src="/static/app-logo.png" class="modal-body-logo" id="app-logo"/>
-              <p> <a href="https://www.masternodeum.com/" target="_blank">MasterNodeum</a>  is a site that holding the market for the next generation of mining offering a system that you can be aware of fast, reliable and up-to-date developments. </p>
-              <p><a target="_blank">MasterNodeum</a>  <a href="https://www.masternodeum.com/" target="_blank"></a> In addition, taking care to work with non-fraudulent, secure companies, and we only get ads from companies that match this definition</p>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <div class="content has-text-centered">
-              <div class="footer-title">MasterNodeum | <icon name="calendar" height="12"></icon> 2018</div>
-              <div class="footer-social-media">
-                <a class="icon" href="" target="_blank">
-                  <icon name="h-square" scale="2"></icon>
-                </a>
-                <a class="icon" href="" target="_blank">
-                  <icon name="github-square" scale="2"></icon>
-                </a>
-                 <a class="icon" href="" target="_blank">
-                  <icon name="linkedin-square" scale="2"></icon>
-                </a>
-                <a class="icon" href="mailto:ozantde@gmail.com" target="_blank">
-                  <icon name="envelope-square" scale="2"></icon>
-                </a>
-              </div>
-              <div class="wallet-content">
-
-              </div>
-            </div>
-          </footer>
-          <button class="modal-close is-medium" @click="toggleModal"></button>
-        </div>
-    </div>
-    <div id="overlay" class="overlay modal">
-      <legend>varsa bu kısımla ilgili açıklamalar
-        varsa bu kısımla ilgili açıklamalar
-        varsa bu kısımla ilgili açıklamalar
-        varsa bu kısımla ilgili açıklamalar
-        varsa bu kısımla ilgili açıklamalar</legend>
-      <!-- Popup Div Starts Here -->
-      <div id="popupContact">
-        <!-- Contact Us Form -->
-        <form action="/kaydet.php" id="form" method="post" name="form">
-          <h2 id="subscribeH2">Subscribe Us!</h2>
-          <hr>
-          <span class="formGroup">
-            <label for="name">Name</label>
-            <input id="name" class="subscribeInput" name="name" placeholder="John" type="text" required>
-          </span>
-          <span class="formGroup">
-            <label for="surname">Surname</label>
-            <input id="surname" class="subscribeInput" name="surname" placeholder="Doe" type="text" required>
-          </span>
-          <span class="formGroup emailGroup">
-            <label for="email">Email</label>
-            <input id="email" name="email" class="subscribeInput" placeholder="example@example.com" type="text" required>
-          </span>
-          <span class="formGroup phoneGroup">
-            <span style="display: inline-block">
-              <label for="v-select" style="margin: 25px;">Country</label>
-              <label for="phone" style="margin: 50px;">Phone</label>
+  <div>
+    <div class="hero-head">
+      <header class="nav" :class="{'nav-iframe': isOpenedInIFrame}">
+        <div class="container">
+          <div class="nav-left">
+            <router-link to="/" class="nav-item" :class="{'hide': isOpenedInIFrame}">
+              <img src="/static/app-logo.png" class="app-logo" /> <p class="app-logo-name"><span class="headerSpan">MasterNodeum</span></p>
+            </router-link>
+          </div>
+          <div class="nav-center">
+            <span class="nav-item" :class="{'hide': isOpenedInIFrame}">
+              <a class="enjoy-css" :class="{'hide': isOpenedInIFrame}" @click="div_show">
+                <span class="headerSpan">Wanna Tips?</span>
+              </a>
+              <link async href="https://fonts.googleapis.com/css?family=Advent%20Pro" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
             </span>
-           <span class="telGroup">
-             <v-select id="v-select"  class="Select-option"
-                                      v-model="selectedCountry"
-                                      :options="countryList"
-                                      label="label"
-                                      text="label"
-                                      item-value="id"
-                                      v-on:change="countrySelect"
-                                      return-object >
+          </div>
+          <div class="nav-right nav-menu">
+            <span class="nav-item">
+              <img src="/static/app-logo.png" class="iframe-app-logo" :class="{'show': isOpenedInIFrame}"/>
+              <a class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" @click="toggleModal">
+                <span class="headerSpan">What's this?</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </header>
+      <div class="modal" :class="{'is-active': modalActive}">
+        <div class="modal-background" @click="toggleModal"></div>
+          <div class="modal-card">
+            <header class="modal-card-head"></header>
+            <section class="modal-card-body">
+              <div class="content">
+                <h3> MasterNodeum </h3>
+                <img src="/static/app-logo.png" class="modal-body-logo" id="app-logo"/>
+                <p> <a href="https://www.masternodeum.com/" target="_blank">MasterNodeum</a>  is a site that holding the market for the next generation of mining offering a system that you can be aware of fast, reliable and up-to-date developments. </p>
+                <p><a target="_blank">MasterNodeum</a>  <a href="https://www.masternodeum.com/" target="_blank"></a> In addition, taking care to work with non-fraudulent, secure companies, and we only get ads from companies that match this definition</p>
+              </div>
+            </section>
+            <footer class="modal-card-foot">
+              <div class="content has-text-centered">
+                <div class="footer-title">MasterNodeum | <icon name="calendar" height="12"></icon> 2018</div>
+                <div class="footer-social-media">
+                  <a class="icon" href="" target="_blank">
+                    <icon name="h-square" scale="2"></icon>
+                  </a>
+                  <a class="icon" href="" target="_blank">
+                    <icon name="github-square" scale="2"></icon>
+                  </a>
+                   <a class="icon" href="" target="_blank">
+                    <icon name="linkedin-square" scale="2"></icon>
+                  </a>
+                  <a class="icon" href="mailto:ozantde@gmail.com" target="_blank">
+                    <icon name="envelope-square" scale="2"></icon>
+                  </a>
+                </div>
+                <div class="wallet-content">
 
-             </v-select>
-             <input type="tel" id="phone" name="phone" class="subscribeInput"
-                    placeholder="123-456-7890"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    required />
-           </span>
-          </span>
-          <a href="#" @click="check_empty" id="submit">Send</a>
-        </form>
-        <button id="closePopUp" class="modal-close is-medium" @click="div_hide"></button>
+                </div>
+              </div>
+            </footer>
+            <button class="modal-close is-medium" @click="toggleModal"></button>
+          </div>
       </div>
-      <!-- Popup Div Ends Here -->
+      <div id="overlay" class="overlay modal">
+        <legend>Time is MONEY! Would you like us to mail you?</legend>
+        <!-- Popup Div Starts Here -->
+        <div id="popupContact">
+          <!-- Contact Us Form -->
+          <form action="/kaydet.php" id="form" method="post" name="form">
+            <h2 id="subscribeH2">YES!</h2>
+            <hr>
+            <span class="formGroup">
+              <label for="name">Name</label>
+              <input id="name" class="subscribeInput" name="name" placeholder="John" type="text" required>
+            </span>
+            <span class="formGroup">
+              <label for="surname">Surname</label>
+              <input id="surname" class="subscribeInput" name="surname" placeholder="Doe" type="text" required>
+            </span>
+            <span class="formGroup emailGroup">
+              <label for="email">Email</label>
+              <input id="email" name="email" class="subscribeInput" placeholder="example@example.com" type="text" required>
+            </span>
+            <span class="formGroup phoneGroup">
+              <span style="display: inline-block">
+                <label for="v-select" style="margin: 25px;">Country</label>
+                <label for="phone" style="margin: 50px;">Phone</label>
+              </span>
+             <span class="telGroup">
+               <v-select id="v-select"  class="Select-option"
+                                        v-model="selectedCountry"
+                                        :options="countryList"
+                                        label="label"
+                                        text="label"
+                                        item-value="id"
+                                        v-on:change="countrySelect"
+                                        return-object >
+
+               </v-select>
+               <input type="tel" id="phone" name="phone" class="subscribeInput"
+                      placeholder="123-456-7890"
+                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                      required />
+             </span>
+            </span>
+            <a href="#" @click="check_empty" id="submit">Send</a>
+          </form>
+          <button id="closePopUp" class="modal-close is-medium" @click="div_hide"></button>
+        </div>
+        <!-- Popup Div Ends Here -->
+      </div>
+
+      <div class="column information-section" :class="{'information-section-iframe': isOpenedInIFrame}">
+
+        <div class="dropdown-section show">
+          <div class="control">
+            <button class="button dropdown-button" type="button" @click="toggleDropDown">
+              {{ selectedFiatCurrency }}
+              <span class="arrow-icon">
+                  <icon v-if="!dropDownOpen" name="caret-down" height="13"></icon>
+                  <icon v-if="dropDownOpen" name="caret-up" height="13"></icon>
+                </span>
+            </button>
+
+            <div class="box dropdown" :class="{'is-open': dropDownOpen, 'transparent': isOpenedInIFrame}">
+              <ul>
+                <li v-for="fiatCurrency in fiatCurrencies"><a class="nav-item-dropdown" :class="{'font-white': isOpenedInIFrame}"@click="selectFiatCurrency(fiatCurrency)">{{ fiatCurrency }}</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btcHeader">
+        <table class="btcTable">
+          <thead class="btcThead">
+            <tr>
+              <th class="enjoy-css btcTh"><span class="headerSpan">BITCOIN PRICE</span></th>
+              <th class="enjoy-css btcTh"><span class="headerSpan">BITCOIN MARKETCAP</span></th>
+              <th class="enjoy-css btcTh"><span class="headerSpan">BITCOIN VOLUME</span></th>
+              <th class="enjoy-css btcTh"><span class="headerSpan">BITCOIN DOMINANCE</span></th>
+            </tr>
+          </thead>
+          <br>
+          <tbody class="btcTbody">
+            <tr>
+              <td class="enjoy-css btcTd"><span class="headerSpan">{{this.btc.selectedPrice}}</span></td>
+              <td class="enjoy-css btcTd"><span class="headerSpan">{{this.btc.selectedMarketCap}}</span></td>
+              <td class="enjoy-css btcTd"><span class="headerSpan">{{this.btc.selectedVolume}}</span></td>
+              <td class="enjoy-css btcTd"><span class="headerSpan">{{this.btc.dominance}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -122,8 +162,9 @@
   import {get}  from 'axios'
   import axios from 'axios'
   import VueAxios from 'vue-axios'
-
+  import { store } from '../store.js'
   Vue.use(VueAxios, axios)
+  const fiatCurrencies = [ 'EUR', 'USD', 'AUD', 'TRY', 'RUB', 'BRL', 'CAD', 'CHF', 'CNY', 'GBP', 'HKD', 'IDR', 'INR', 'JPY', 'KRW', 'MXN'];
 export default {
   name: 'headerHero',
   data () {
@@ -134,15 +175,23 @@ export default {
       showETHWallet: false,
       isOpenedInIFrame: false,
       countryList: [],
-      selectedCountry: null
+      selectedCountry: null,
+      fiatCurrencies: fiatCurrencies,
+      selectedFiatCurrency: fiatCurrencies[1],
+      dropDownOpen: false,
+      btc: store.state.btc
     }
   },
   created () {
     if (window.self !== window.top) {
       this.isOpenedInIFrame = true
     }
+    this.selectFiatCurrency('USD')
   },
   methods: {
+    toggleDropDown () {
+      this.dropDownOpen = !this.dropDownOpen
+    },
     toggleModal () {
       this.modalActive = !this.modalActive
     },
@@ -151,6 +200,26 @@ export default {
     },
     displayETH () {
       this.showETHWallet = true
+    },
+    selectFiatCurrency (fiatCurrencyEvent) {
+      this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent;
+      this.axios.get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`)
+        .then(cryptoCurrency => {
+          this.toggleDropDown()
+          this.dropDownOpen = false//bu ve üstteki satır görünmesini sağlamak için. Toggle etmeden dom yenilenmiyor.
+          this.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          this.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
+          this.btc.selectedVolume = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['volume_24h']).toLocaleString()
+        })
+      const getUrl = 'https://api.coinmarketcap.com/v1/global/'
+      get(getUrl).then((response) => {
+        this.toggleDropDown()
+        this.dropDownOpen = false//bu ve üstteki satır görünmesini sağlamak için. Toggle etmeden dom yenilenmiyor.
+        const globalData = response.data
+        this.btc.totalMarketCapUSD = Number(globalData.total_market_cap_usd).toLocaleString()
+        this.btc.dominance = Number(globalData.bitcoin_percentage_of_market_cap).toLocaleString()
+        console.log(this.btc.dominance)
+      })
     },
     check_empty() {
       if (document.getElementById('name').value === "" || document.getElementById('email').value === "" ) {
@@ -224,10 +293,136 @@ $subscription-form-color: white;
 $subscription-form-padding: rem-calc(32);
 
 
+.dropdown-section {
+  position: absolute;
+  right: 50px;
+  top: 90px;
+
+  @media screen and (max-width: $medium) {
+    right: 20px;
+  }
+
+  .control {
+    text-align: center;
+
+    .button {
+      font-size: 11px;
+      width: 50px;
+      color: #022818;
+      background-color: #1ecd97;
+      position: relative;
+
+      &:focus {
+        border-color: #FFF;
+      }
+
+      .arrow-icon {
+        position: absolute;
+        right: 2px;
+        bottom: 1px;
+        color: #fd6721;
+        }
+    }
+
+    .box {
+      padding: 7px;
+      background-color: transparent;
+    }
+
+    .dropdown {
+      width: 50px;
+      box-shadow: #1ecd97;
+      display: none;
+      left: 0;
+      position: absolute;
+      top: 100%;
+      z-index: 1000;
+      height: 150px;
+      overflow-y: scroll;
+      background-color: #FFF;
+
+      ul {
+      }
+
+      &.is-open {
+        display: block;
+      }
+
+      .nav-item-dropdown {
+        font-size: 11px;
+        margin: 0 !important;
+        border: none;
+        //color: #1e1335;
+        color:#022818;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s;
+
+        &:hover {
+          color: #fd6721;
+          background: #1ecd97;
+        }
+      }
+    }
+  }
+}
+
+.btcHeader{
+  color: #022818;
+  width: 70%;
+  margin: auto;
+}
+.btcTable {
+  display: table;
+  word-break: normal;
+  border: 0;
+}
+th.btcTh{
+  border: 0;
+  border-bottom: 1px solid #1ecd97;
+}
+td.btcTd{
+  text-align: center;
+  vertical-align: center;
+  border: 0;
+}
 .headerSpan{
   color: #1ecd97;
 }
-
+th span.headerSpan{
+  font-family: "Helvetica Neue", "Helvetica";
+  font-size: 1rem;
+  @media screen and (max-width:1180px) {
+    font-size: 0.9rem;
+  }
+  @media screen and (max-width:1070px) {
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width:960px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width:885px) {
+    font-size: 0.6rem;
+  }
+}
+td span.headerSpan{
+  font-family: "Helvetica Neue", "Helvetica";
+  font-size: 1rem;
+  @media screen and (max-width:1180px) {
+    font-size: 0.9rem;
+  }
+  @media screen and (max-width:1070px) {
+    font-size: 0.8rem;
+  }
+  @media screen and (max-width:960px) {
+    font-size: 0.7rem;
+  }
+  @media screen and (max-width:885px) {
+    font-size: 0.6rem;
+  }
+}
   #form,#subscribeH2, .formGroup>input{
     font-family: 'Kaushan Script', cursive !important;
   }

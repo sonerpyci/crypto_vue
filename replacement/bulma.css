@@ -242,7 +242,7 @@ table th {
   background-color: initial;
   table-layout: fixed;
   color: #138;
-  max-width: 75%;
+  max-width: 90%;
   margin: 0px auto;
 }
 #mythead {
@@ -254,11 +254,9 @@ table th {
   -ms-user-select: none;
   user-select: none;
 }
+
 .open ul {
   max-height: 100px!important;
-}
-.dropdown-toggle.clearfix {
-  width: 63px;
 }
 .mytr {
   color: #121212;
@@ -309,12 +307,25 @@ table th {
     margin: 0 auto;
   }
 }
+@media screen and (max-width: 1250px) {
+  th.myTableButton {
+    font-size: 0.9rem;
+  }
+}
+@media screen and (max-width: 575px) {
+  th.myTableButton {
+    font-size: 0.8rem;
+  }
+}
 @media screen and (max-width: 500px) {
   #mytd {
     font-size: 0.8rem;
   }
   #myth:not(span){
     font-size: 0.8rem;
+  }
+  th.myTableButton {
+    font-size: 0.7rem;
   }
 }
 @media screen and (max-width: 440px) {
@@ -325,7 +336,10 @@ table th {
     font-size: 0.7rem;
   }
   #mytd.Logo {
-   padding: 10px 10px !important;
+    padding: 10px 10px !important;
+  }
+  th.myTableButton {
+    font-size: 0.6rem;
   }
 }
 @media screen and (max-width: 400px) {
@@ -338,6 +352,9 @@ table th {
   #mytd.Logo {
     padding: 10px 10px !important;
   }
+  th.myTableButton {
+    font-size: 0.5rem;
+  }
 }
 @media screen and (max-width: 360px) {
   #mytd {
@@ -348,7 +365,10 @@ table th {
   }
   #mytd.Logo {
     padding: 10px 10px !important;
-   }
+  }
+  th.myTableButton {
+    font-size: 0.4rem;
+  }
 }
 
 #mytd {
@@ -376,13 +396,15 @@ table th {
 #myth.active .arrow {
   opacity: 1;
 }
+
 .myTableLogo {
   min-width: 35px;
   min-height: 35px;
-  }
-  .MyDollar {
+}
+.MyDollar {
   text-align: center;
 }
+
 .arrow {
   display: inline-block;
   vertical-align: middle;
@@ -404,9 +426,23 @@ table th {
   border-right: 4px solid transparent;
   border-top: 4px solid #fff;
 }
-
-
-
+th.myTableButton {
+  padding: 5px;
+  color: #022818;
+  background: #e3e7ed;
+  border-right: 1px solid #42b983;
+  border-bottom: 1px solid #42b983;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+th.myTableButton:hover {
+  border-radius: 4px;
+  /*color: #4493ed;*/
+  background: rgb(66, 185, 131,.99);
+  transition: .2s;
+  border: 1px solid #42b983;
+}
 
 .is-block {
   display: block;

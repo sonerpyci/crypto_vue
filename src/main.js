@@ -30,6 +30,7 @@ new Vue({
     sharedState: store.state
   },
   created () {
+    //store.getBtcInfo()
     store.getCryptoCurrencies()
     store.getTotalMarketCapUSD()
   }

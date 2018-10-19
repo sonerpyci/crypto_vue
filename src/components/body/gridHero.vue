@@ -24,7 +24,7 @@
       </div>
     </div>
     <form id="search">
-      <font-awesome-icon icon="search-dollar" /> <input id="searchInput" name="query" autocomplete="off" placeholder="Type something to filter" v-model="searchQuery" @keydown.enter.prevent=""/>
+      <font-awesome-icon icon="search-dollar" /> <input id="searchInput" name="query" autocomplete="off" placeholder="Try Me!" v-model="searchQuery" @keydown.enter.prevent=""/>
  </form>
       <demo-grid
         :data="allCryptoCurrencies"
@@ -47,6 +47,18 @@
   Vue.component('font-awesome-icon', FontAwesomeIcon);
   Vue.component('demo-grid', {
     template: '  <table id="mytable">\n' +
+    '    <thead id="myTableButtonHead">\n' +
+    '      <tr id="myTableButtonRow" >\n' +
+    '        <th colspan="2" class="myTableButton"\n' +
+    '          @click="filterByStatus(\'Active\')">\n' +
+    '          Active\n'+
+    '        </th>\n' +
+    '        <th  colspan="2" class="myTableButton"\n' +
+    '          @click="filterByStatus(\'Maintenance\')">\n' +
+    '          Maintenance\n'+
+    '        </th>\n' +
+    '      </tr>\n' +
+    '    </thead>\n' +
     '    <thead id="mythead">\n' +
     '      <tr id="mytr" >\n' +
     '        <th id="myth" v-for="key in columns"\n' +
@@ -58,8 +70,8 @@
     '        </th>\n' +
     '      </tr>\n' +
     '    </thead>\n' +
-    '    <tbody id="mytbody">\n' +
-    '      <tr @click="rowClick(entry.coin)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
+    '    <tbody id="mytbody" name="fade" is="transition-group">\n' +
+    '      <tr v-bind:key="entry.coin" @click="rowClick(entry.coin)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
     '        <td id="mytd" v-for="key in columns" :class="key" v-if="key == \'Logo\' ">\n' +
     '        \t<figure class=" myTableLogo">\n' +
     '          \t<img class="formatted-image" :src=entry[key]>\n' +
@@ -85,6 +97,7 @@
     },
     data: function () {
       var sortOrders = {}
+      var listParameter = ""
       this.columns.forEach(function (key) {
         sortOrders[key] = 1
       })
@@ -99,6 +112,7 @@
         var filterKey = this.filterKey && this.filterKey.toLowerCase()
         var order = this.sortOrders[sortKey] || 1
         var data = this.data
+        var filteredByStatus = false
         if (filterKey) {
           data = data.filter(function (row) {
             return Object.keys(row).some(function (key) {
@@ -123,7 +137,6 @@
               return (a === b ? 0 : a > b ? 1 : -1) * order
             })
           }
-          console.log(this.data)
           return data
         } else {
           return this.data
@@ -142,7 +155,26 @@
       },
       rowClick: function (coin) {
         console.log(coin);
-        router.push({ path: coin })
+        router.push({path: coin})
+      },
+      filterByStatus: function (listParameter) {
+        if (this.listParameter !== listParameter) {
+          this.filteredByStatus = true
+          console.log(this.filteredByStatus)
+          this.listParameter = listParameter
+          console.log(this.listParameter)
+          let data = store.state.cryptoCurrencies.filter(function (el) {
+            return el.Status === listParameter;
+          });
+          this.data = data
+        } else {
+          this.filteredByStatus = false
+          console.log(this.filteredByStatus)
+          this.data = store.state.cryptoCurrencies
+          this.listParameter = ""
+          console.log(this.listParameter)
+        }
+        //return this.data
       }
     }
   });
@@ -211,11 +243,14 @@
       margin-top: 40px;
       margin-bottom: 5px;
     }
-
+#myTableButton{
+  color: #cd0930;
+}
     #searchInput{
       border: 2px solid #022818;
       border-radius: 30px;
       padding-left: 5px;
+      height: 2em;
     }
 
     #searchInput:focus{
@@ -285,7 +320,9 @@
         top: -23px;
       }
     }
-
+    .img.formatted-image{
+      width: 57%;
+    }
     .card-content {
       padding: 0;
 
