@@ -2,7 +2,6 @@ import Vue from 'vue'
 import {get}  from 'axios'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
 Vue.use(VueAxios, axios)
 
 //  const getUrl = 'https://api.coinmarketcap.com/v1/ticker/?limit=10'
@@ -11,6 +10,7 @@ const cryptoCurrencyData = require('./cryptocurrency-data.json')
 export const store = {
   //cryptoCompareUrl: 'https://min-api.cryptocompare.com/data/top/totalvol?tsym=USD&limit=500',
   cryptoCompareUrl: 'https://masternodes.pro/apiv2/coin/stats/',
+  api_url: 'http://localhost:3000/registration',
   state: {
     isCurrenciesReady: false,
     totalMarketCapUSD: 0,
@@ -26,55 +26,54 @@ export const store = {
   getCryptoCurrencies: function () {
     let promises = [];
     let responses = [];
-    let coinFilter = ["Dash","Bitg","xzc","pac","bsd","xsn","smart", "ION", "GIN"];
-      for (let i = 0; i<coinFilter.length; i++) {
-        promises.push(
-          new Promise ( (resolve, reject) => {
-            get(this.cryptoCompareUrl + coinFilter[i]).then((response) => {
-              //this.state.cryptoCurrencies.push(response.data);
-              let temp = response.data;
-              console.log(temp);
-              try{
-                if( (typeof temp === "object") && (temp !== null) )
-                  this.getPercentChange (temp);
-              }
-              catch(err){
-                console.log('Error found in currency:  ' , coinFilter[i] );;
-              }
-              if(coinFilter[i] === 'Dash')
-                temp.stats.Logo = "/static/dash_large_logo.png";
 
-                if( (typeof temp === "object") && (temp !== null) )
-                responses.push(temp);
-              resolve();
-            }).catch(reject)
+    promises.push(
+      new Promise ( (resolve, reject) => {
+        get(this.api_url).then((response) => {
+          //this.state.cryptoCurrencies.push(response.data);
+          for (let i = 0; i<response.data.length; i++){
+            let temp = response.data[i];
+            //console.log(temp);
+            try{
+              if( (typeof temp === "object") && (temp !== null) )
+                this.getPercentChange (temp);
+            }
+            catch(err){
+              console.log('Error found in currency:  ', err );
+            }
+            responses.push(temp);
+            resolve();
+          }
+        }).catch(reject)
+      })
+    )
 
-          })
-        )
-      }
-      Promise.all(promises).then(() => {
-        this.state.cryptoCurrencies = responses;
-      });
-
+    Promise.all(promises).then(() => {
+      this.state.cryptoCurrencies = responses;
+    });
   },
   getDifferenceInChange (cryptoCurrency) {
-    cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1)
-    cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '')
-    cryptoCurrency['Coins Required']= cryptoCurrency.stats.masterNodeCoinsRequired;
-    cryptoCurrency['Current Price'] = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3)
-    cryptoCurrency['Worth'] = Number(cryptoCurrency.stats.masterNodeWorth).toFixed(2)
-    cryptoCurrency['Daily Income'] = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(3);
-    cryptoCurrency['Weekly Income'] = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(3);
-    cryptoCurrency['Monthly Income'] = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(3);
-    cryptoCurrency['Yearly Income'] = Number(cryptoCurrency.stats.income.yearly.toString().replace(/^-/, '')).toFixed(3);
-    cryptoCurrency['Roi'] = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
-    cryptoCurrency['Master Node Count'] = Number(cryptoCurrency.advStats.masterNodeCount);
+
+    cryptoCurrency['positivePercentChange'] = !(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().indexOf('-') > -1)
+    cryptoCurrency['percentChange24h'] = cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().replace(/^-/, '')
+    cryptoCurrency['coin'] = cryptoCurrency.coinTicker.toLowerCase();
+    cryptoCurrency['Coins Required']= cryptoCurrency.collateralAmount;
+    cryptoCurrency['Current Price'] = (cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['currentPrice'] * parseFloat(this.state.btc.selectedPrice.replace(",",""))).toFixed(3)
+    cryptoCurrency['Worth'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['worth']).toFixed(2)
+    cryptoCurrency['rank'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['rank'])
+    cryptoCurrency['Daily Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['dailyIncome'].toString().replace(/^-/, '')).toFixed(3);
+    //cryptoCurrency['Weekly Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['dailyIncome'].toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Monthly Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['monthlyIncome'].toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Yearly Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['yearlyIncome'].toString().replace(/^-/, '')).toFixed(3);
+    cryptoCurrency['Roi'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['roi'].toString().replace(/^-/, '')).toFixed(2);
+    cryptoCurrency['Master Node Count'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['masternode_count']);
     //let randomNumber = Math.floor(Math.random()*this.state.statusArray.length);
     cryptoCurrency['Status'] = this.state.statusArray[0];
-    if(cryptoCurrency.coin === 'dash')
+
+    if(cryptoCurrency.coinName === 'Dash')
       cryptoCurrency['Logo'] = "/static/dash_large_logo.png";
     else
-      cryptoCurrency['Logo'] = cryptoCurrency.stats.logo;
+      cryptoCurrency['Logo'] = cryptoCurrency.coinLogo;
   },
   addImageAndDescription(cryptoCurrency) {
     cryptoCurrency.id =  cryptoCurrency.stats.cmc.id in cryptoCurrencyData ? cryptoCurrency.stats.cmc.id : undefined;
@@ -84,7 +83,6 @@ export const store = {
     cryptoCurrency.github = cryptoCurrency.mpndata.sites.coin_github;
     cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.indexOf('-') > -1);
     cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '');
-
   },
   getTotalMarketCapUSD() {
     let promises = [];
@@ -106,22 +104,17 @@ export const store = {
   getPercentChange (cryptoCurrency) {
     this.getDifferenceInChange (cryptoCurrency);
     return cryptoCurrency.percentChange24h
-  }/*,
-  getBtcInfo (fiatCurrencyEvent) {
+  },
+  getBtcInfo () {
     this.selectedFiatCurrency = 'USD';
-    let promises = [];
-    promises.push(
-      new Promise ( (resolve, reject) => {
-        get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`).then((cryptoCurrency) => {
-          this.state.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          this.state.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
-          resolve();
-        }).catch(reject)
-      })
-    );
-    Promise.all(promises).then(() => {
-      console.log(this.state.btc)
-    });
-  }*/
+    return new Promise ( (resolve, reject) => {
+      get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`).then((cryptoCurrency) => {
+        this.state.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        this.state.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
+        resolve();
+      }).catch(reject)
+    })
+
+  }
 
 }

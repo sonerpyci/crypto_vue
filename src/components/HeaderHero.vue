@@ -179,7 +179,8 @@ export default {
       fiatCurrencies: fiatCurrencies,
       selectedFiatCurrency: fiatCurrencies[1],
       dropDownOpen: false,
-      btc: store.state.btc
+      btc: store.state.btc,
+      intervalid1:''
     }
   },
   created () {
@@ -187,6 +188,9 @@ export default {
       this.isOpenedInIFrame = true
     }
     this.selectFiatCurrency('USD')
+  },
+  mounted : function(){
+    this.refreshPrices()
   },
   methods: {
     toggleDropDown () {
@@ -201,15 +205,38 @@ export default {
     displayETH () {
       this.showETHWallet = true
     },
-    selectFiatCurrency (fiatCurrencyEvent) {
+    refreshPrices : function() {
+      this.intervalid1 = setInterval(function() {
+        //this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent;
+        this.axios.get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`)
+          .then(cryptoCurrency => {
+            //this.toggleDropDown()
+            //this.dropDownOpen = false//bu ve üstteki satır görünmesini sağlamak için. Toggle etmeden dom yenilenmiyor.
+            this.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            this.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
+            this.btc.selectedVolume = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['volume_24h']).toLocaleString()
+            store.getCryptoCurrencies()
+          })
+        const getUrl = 'https://api.coinmarketcap.com/v1/global/'
+        get(getUrl).then((response) => {
+          //this.toggleDropDown()
+          //this.dropDownOpen = false//bu ve üstteki satır görünmesini sağlamak için. Toggle etmeden dom yenilenmiyor.
+          const globalData = response.data
+          this.btc.totalMarketCapUSD = Number(globalData.total_market_cap_usd).toLocaleString()
+          this.btc.dominance = Number(globalData.bitcoin_percentage_of_market_cap).toLocaleString()
+        })
+      }.bind(this), 60000);
+    },
+    selectFiatCurrency : function(fiatCurrencyEvent) {
       this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent;
       this.axios.get(`https://api.coinmarketcap.com/v2/ticker/1/?convert=${this.selectedFiatCurrency}`)
-        .then(cryptoCurrency => {
+        .then(response => {
           this.toggleDropDown()
           this.dropDownOpen = false//bu ve üstteki satır görünmesini sağlamak için. Toggle etmeden dom yenilenmiyor.
-          this.btc.selectedPrice = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          this.btc.selectedMarketCap = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
-          this.btc.selectedVolume = Number(cryptoCurrency.data.data['quotes'][this.selectedFiatCurrency]['volume_24h']).toLocaleString()
+          this.btc.selectedPrice = Number(response.data.data['quotes'][this.selectedFiatCurrency]['price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          this.btc.selectedMarketCap = Number(response.data.data['quotes'][this.selectedFiatCurrency]['market_cap']).toLocaleString()
+          this.btc.selectedVolume = Number(response.data.data['quotes'][this.selectedFiatCurrency]['volume_24h']).toLocaleString()
+          store.getCryptoCurrencies()
         })
       const getUrl = 'https://api.coinmarketcap.com/v1/global/'
       get(getUrl).then((response) => {
@@ -218,7 +245,6 @@ export default {
         const globalData = response.data
         this.btc.totalMarketCapUSD = Number(globalData.total_market_cap_usd).toLocaleString()
         this.btc.dominance = Number(globalData.bitcoin_percentage_of_market_cap).toLocaleString()
-        console.log(this.btc.dominance)
       })
     },
     check_empty() {
@@ -229,7 +255,6 @@ export default {
       }
     },
     countrySelect(){
-      console.log("selected");
       document.getElementById('phone').value = '+'+ this.selectedCountry.TELEFON_KODU
     },
 //Function To Display Popup
@@ -248,7 +273,6 @@ export default {
       );
       Promise.all(promises).then(() => {
         this.countryList = responses[0];
-        console.log(responses[0]);
       });
     },
 //Function to Hide Popup
@@ -266,7 +290,6 @@ export default {
       };
       this.axios.post('http://localhost:3000/subscribers', data)
         .then(response => {
-          console.log(response);
           if(response.data.success == true){
             this.div_hide();
             alert("Form Submitted Successfully...");

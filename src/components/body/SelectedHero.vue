@@ -9,18 +9,18 @@
       </router-link>
       <div class="column is-7 image-section">
         <img  :src="`${selectedCryptoCurrency.Logo}`" class="cryptoCurrency-image" :class="{'cryptoCurrency-image-iframe': isOpenedInIFrame}"/>
-        <h1 class="cryptoCurrency-title" :class="{'cryptoCurrency-title-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.cmc.name.toUpperCase() }}</h1>
-        <span class="tag is-primary" :class="{'tag-iframe': isOpenedInIFrame}">Rank {{ selectedCryptoCurrency.stats.cmc.rank}}</span>
+        <h1 class="cryptoCurrency-title" :class="{'cryptoCurrency-title-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.coinName.toUpperCase() }}</h1>
+        <span class="tag is-primary" :class="{'tag-iframe': isOpenedInIFrame}">Rank {{ selectedCryptoCurrency.rank}}</span>
         <p class="cryptoCurrency-description" :class="{'cryptoCurrency-description-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.description }}</p>
         <div class="icons-section">
-          <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_website" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_website" target="_blank"><icon name="link" scale="1.5"></icon><p>{{selectedCryptoCurrency.stats.cmc.name}} Official</p></a>
+          <span v-if="selectedCryptoCurrency.homepage" class="icon">
+            <a :href="selectedCryptoCurrency.homepage" target="_blank"><icon name="link" scale="1.5"></icon><p>{{selectedCryptoCurrency.coinName}} Official</p></a>
           </span>
-          <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_ann" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_ann" target="_blank"><icon name="file-text" scale="1.5"></icon><p>BTC Talk</p></a>
+          <span v-if="selectedCryptoCurrency.btcTalkAnn" class="icon">
+            <a :href="selectedCryptoCurrency.btcTalkAnn" target="_blank"><icon name="file-text" scale="1.5"></icon><p>BTC Talk</p></a>
           </span>
-          <span v-if="selectedCryptoCurrency.mnpdata.sites.coin_github" class="icon">
-            <a :href="selectedCryptoCurrency.mnpdata.sites.coin_github" target="_blank"><icon name="github" scale="1.5"></icon><p>Github Repository</p></a>
+          <span v-if="selectedCryptoCurrency.github" class="icon">
+            <a :href="selectedCryptoCurrency.github" target="_blank"><icon name="github" scale="1.5"></icon><p>Github Repository</p></a>
           </span>
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="price-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="masternode-tag">MasterNode Info [Coins Required / Worth($)]</p>
           <!--<p class="masternode-info-tag">Coins Required / Worth</p>-->
-          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency.stats.masterNodeCoinsRequired }} / {{ selectedCryptoCurrency.stats.masterNodeWorth }} $</p>
+          <p class="masternode-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedCryptoCurrency['Coins Required'] }} / {{ selectedCryptoCurrency['Worth'] }} $</p>
         </div>
         <div class="price-section price-select-section" :class="{'price-section-iframe': isOpenedInIFrame}">
           <p class="masternode-tag">Income Info</p>
@@ -82,7 +82,7 @@
 
 <script>
 import { store } from '../../store.js'
-
+import header from '../HeaderHero'
 const fiatCurrencies = [ 'AUD', 'BRL', 'CAD', 'CHF', 'CNY', 'EUR', 'GBP', 'HKD', 'IDR', 'INR', 'JPY', 'USD', 'KRW', 'MXN', 'RUB' ]
 const cryptoCurrencyData = require('../../cryptocurrency-data.json')
 
@@ -90,6 +90,7 @@ export default {
   name: 'selectedHero',
   data () {
     return {
+      //btcPrice : header.btc,
       sharedState: store.state,
       selectedCryptoCurrency: {},
       fiatCurrencies: fiatCurrencies,
@@ -129,21 +130,29 @@ export default {
       this.dropDownOpen = !this.dropDownOpen
     },
     selectCryptoCurrency: function () {
-      let cryptoCurrency
+      let cryptoCurrency;
       if (this.sharedState.cryptoCurrencies.length === 0 || !this.sharedState.cryptoCurrencies) {
-        this.axios.get(`https://masternodes.pro/apiv2/coin/stats/${this.$route.params.id}/`)
-          .then(response => {
-            cryptoCurrency = response.data
-            cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
-            this.selectedCryptoCurrency = this.addImageAndDescription(cryptoCurrency)
-          }).catch((err) => {/*console.log(err)*/})
+          this.axios.get(`http://localhost:3000/registration/byName/${this.$route.params.id}/`)
+            .then(response => {
+              cryptoCurrency = response.data
+              cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
+              this.selectedCryptoCurrency = this.addImageAndDescription(cryptoCurrency)
+            }).catch((err) => {/*console.log(err)*/})
+
       } else {
+        console.log( this.sharedState.cryptoCurrencies)
         cryptoCurrency = this.sharedState.cryptoCurrencies.filter((obj) => {
-          return obj.coin === this.$route.params.id
-        })[0]
+          return obj.coinName === this.$route.params.id
+        })[0];
+        console.log(cryptoCurrency)
         this.selectedCryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
         this.selectedCryptoCurrency = this.addImageAndDescription(cryptoCurrency)
+        console.log(this.selectedCryptoCurrency)
       }
+    },
+    manipulateCryptoCurrency (cryptoCurrency) {
+      cryptoCurrency.selectedPrice = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1].currentPrice * parseFloat(header.data().btc.selectedPrice.replace(",",""))).toFixed(3)
+      return cryptoCurrency
     },
     selectFiatCurrency (fiatCurrencyEvent) {
       this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent
@@ -154,24 +163,16 @@ export default {
           this.selectedCryptoCurrency.selectedMarketCap = Number(cryptoCurrency.data[0]['market_cap_' + this.selectedFiatCurrency.toLowerCase()]).toLocaleString()
         })
     },
-    manipulateCryptoCurrency (cryptoCurrency) {
-      cryptoCurrency.selectedPrice = Number(cryptoCurrency.stats.cmc.price_usd).toFixed(3)
-      cryptoCurrency.selectedSupply = Number(cryptoCurrency.stats.cmc.available_supply).toLocaleString()
-      cryptoCurrency.selectedMarketCap = Number(cryptoCurrency.stats.cmc.market_cap_usd).toLocaleString()
-      return cryptoCurrency
-    },
     addImageAndDescription (cryptoCurrency) {
-      cryptoCurrency.id =  cryptoCurrency.stats.cmc.name in cryptoCurrencyData ? cryptoCurrency.stats.cmc.name : cryptoCurrency.coin;
-      cryptoCurrency.description = cryptoCurrencyData[cryptoCurrency.id].description;
-      cryptoCurrency.website = cryptoCurrency.href;
-      cryptoCurrency.paper = cryptoCurrency.mnpdata.sites.coin_ann;
-      cryptoCurrency.github = cryptoCurrency.mnpdata.sites.coin_github;
-      cryptoCurrency.positivePercentChange = !(cryptoCurrency.stats.cmc.percent_change_24h.toString().indexOf('-') > -1);
-      cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.toString().replace(/^-/, '');
-      cryptoCurrency.dailyIncome = Number(cryptoCurrency.stats.income.daily.toString().replace(/^-/, '')).toFixed(4);
-      cryptoCurrency.weeklyIncome = Number(cryptoCurrency.stats.income.weekly.toString().replace(/^-/, '')).toFixed(4);
-      cryptoCurrency.monthlyIncome = Number(cryptoCurrency.stats.income.monthly.toString().replace(/^-/, '')).toFixed(4);
-      cryptoCurrency.roi = Number(cryptoCurrency.stats.roi.toString().replace(/^-/, '')).toFixed(2);
+      cryptoCurrency.id =  cryptoCurrency.coinName.toLowerCase() in cryptoCurrencyData ? cryptoCurrency.coinName : cryptoCurrency.coin;
+      cryptoCurrency.description = cryptoCurrency.coin in cryptoCurrencyData ? cryptoCurrencyData[cryptoCurrency.coin].description : cryptoCurrencyData['undefined'].description;
+      cryptoCurrency.website = cryptoCurrency.homepage;
+      cryptoCurrency.paper = cryptoCurrency.btcTalkAnn;
+      cryptoCurrency.dailyIncome = Number(cryptoCurrency['Daily Income'].toString().replace(/^-/, '')).toFixed(4);
+      cryptoCurrency.monthlyIncome = Number(cryptoCurrency['Monthly Income'].toString().replace(/^-/, '')).toFixed(4);
+      cryptoCurrency.roi = Number(cryptoCurrency['Roi'].toString().replace(/^-/, '')).toFixed(2);
+      console.log(cryptoCurrency)
+
       return cryptoCurrency
     }
   }

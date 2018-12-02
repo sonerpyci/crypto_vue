@@ -3,7 +3,7 @@
     <div class="banner"> </div>
     <div class="columns fiveCoins" style="margin: 0px 10px">
       <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
-        <router-link :to="`/${cryptoCurrency.coin}`">
+        <router-link :to="`/${cryptoCurrency.coinName}`">
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
               <figure class="image is-4by3">
@@ -11,7 +11,7 @@
               </figure>
             </div>
             <div class="card-content">
-              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.stats.cmc.name.toUpperCase() }}</p>
+              <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.coinName }}</p>
               <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
                 <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ cryptoCurrency.percentChange24h/*getPercentChange(cryptoCurrency)*/ }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
@@ -42,6 +42,7 @@
   import { faSearchDollar } from '@fortawesome/free-solid-svg-icons'
   library.add(faSearchDollar)
   import { store } from '../../store.js'
+  import header from '../../components/HeaderHero'
   import router from '../../routes.js'
   import Vue from 'vue'
   Vue.component('font-awesome-icon', FontAwesomeIcon);
@@ -71,14 +72,14 @@
     '      </tr>\n' +
     '    </thead>\n' +
     '    <tbody id="mytbody" name="fade" is="transition-group">\n' +
-    '      <tr v-bind:key="entry.coin" @click="rowClick(entry.coin)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
+    '      <tr v-bind:key="entry.coin" @click="rowClick(entry.coinName)" id="mytr" class="mytr" v-for="entry in filteredData">\n' +
     '        <td id="mytd" v-for="key in columns" :class="key" v-if="key == \'Logo\' ">\n' +
-    '        \t<figure class=" myTableLogo">\n' +
-    '          \t<img class="formatted-image" :src=entry[key]>\n' +
+    '        \t<figure class="myTableLogo">\n' +
+    '          \t<img class="formatted-image" id="myTableLogo" :src=entry[key]>\n' +
     '          </figure>\n' +
     '        </td>\n' +
     '        <td id="mytd" :class="key" v-else-if="key == \'Current Price\' /*|| key == \'Yearly Income\'  || key == \'Monthly Income\' || key == \'Daily Income\' */">\n' +
-    '          {{entry[key]}} <span class="MyDollar">$</span>\n' +
+    '          {{entry[key]}}\n' +
     '        </td>\n' +
     '        <td id="mytd" :class="key" v-else-if="key == \'coin\' ">\n' +
     '          {{entry[key].toUpperCase()}}\n' +
@@ -186,7 +187,8 @@
         searchQuery: '',
         gridColumns : ['Logo','coin', 'Coins Required', 'Current Price', 'Worth', 'Daily Income', 'Monthly Income', 'Yearly Income', 'Roi', 'Master Node Count'],
         sharedState: store.state,
-        isOpenedInIFrame: false
+        isOpenedInIFrame: false,
+        btcPrice : header.btc
       }
     },
     created () {
@@ -215,7 +217,10 @@
         //cryptoCurrency.percentChange24h = cryptoCurrency.stats.cmc.percent_change_24h.replace(/^-/, '')
       },
       getPriceUSD (cryptoCurrency) {
-        const priceUsd = cryptoCurrency.stats.cmc.price_usd
+        console.log(cryptoCurrency)
+        console.log(header.data().btc.selectedPrice)
+        const priceUsd = cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1].currentPrice * parseFloat(header.data().btc.selectedPrice.replace(",",""));
+        console.log(priceUsd)
         return Number(priceUsd).toFixed(3)
       },
       getPercentChange (cryptoCurrency) {
@@ -319,9 +324,6 @@
       .image {
         top: -23px;
       }
-    }
-    .img.formatted-image{
-      width: 57%;
     }
     .card-content {
       padding: 0;

@@ -30,9 +30,14 @@ new Vue({
     sharedState: store.state
   },
   created () {
-    //store.getBtcInfo()
-    store.getCryptoCurrencies()
-    store.getTotalMarketCapUSD()
+    store.getBtcInfo().then( () => {
+      store.getCryptoCurrencies()
+      store.getTotalMarketCapUSD()
+      if (window.location.href.split("/").pop() !== "")
+        router.go(-1)
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 })
 

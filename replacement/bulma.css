@@ -254,7 +254,16 @@ table th {
   -ms-user-select: none;
   user-select: none;
 }
-
+#myTableLogo{
+  height: 50px !important;
+  width: 57%;
+}
+@media screen and (max-width: 1320px){
+  #myTableLogo{
+    height: 50px !important;
+    width: 70%;
+  }
+}
 .open ul {
   max-height: 100px!important;
 }
