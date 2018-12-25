@@ -132,7 +132,7 @@ export default {
     selectCryptoCurrency: function () {
       let cryptoCurrency;
       if (this.sharedState.cryptoCurrencies.length === 0 || !this.sharedState.cryptoCurrencies) {
-          this.axios.get(`http://localhost:3000/registration/byName/${this.$route.params.id}/`)
+          this.axios.get(`https://api.masternodeum.com/registration/byName/${this.$route.params.id}/`)
             .then(response => {
               cryptoCurrency = response.data
               cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)

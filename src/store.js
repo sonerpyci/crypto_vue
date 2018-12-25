@@ -10,7 +10,7 @@ const cryptoCurrencyData = require('./cryptocurrency-data.json')
 export const store = {
   //cryptoCompareUrl: 'https://min-api.cryptocompare.com/data/top/totalvol?tsym=USD&limit=500',
   cryptoCompareUrl: 'https://masternodes.pro/apiv2/coin/stats/',
-  api_url: 'http://localhost:3000/registration',
+  api_url: 'https://api.masternodeum.com/registration',
   state: {
     isCurrenciesReady: false,
     totalMarketCapUSD: 0,
@@ -54,13 +54,13 @@ export const store = {
   },
   getDifferenceInChange (cryptoCurrency) {
 
-    cryptoCurrency['positivePercentChange'] = !(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().indexOf('-') > -1)
-    cryptoCurrency['percentChange24h'] = cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().replace(/^-/, '')
+    cryptoCurrency['positivePercentChange'] = !(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().indexOf('-') > -1);
+    cryptoCurrency['percentChange24h'] = cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['percentChange24h'].toString().replace(/^-/, '');
     cryptoCurrency['coin'] = cryptoCurrency.coinTicker.toLowerCase();
     cryptoCurrency['Coins Required']= cryptoCurrency.collateralAmount;
     cryptoCurrency['Current Price'] = (cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['currentPrice'] * parseFloat(this.state.btc.selectedPrice.replace(",",""))).toFixed(3)
-    cryptoCurrency['Worth'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['worth']).toFixed(2)
-    cryptoCurrency['rank'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['rank'])
+    cryptoCurrency['Worth'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['worth']).toFixed(2);
+    cryptoCurrency['rank'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['rank']);
     cryptoCurrency['Daily Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['dailyIncome'].toString().replace(/^-/, '')).toFixed(3);
     //cryptoCurrency['Weekly Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['dailyIncome'].toString().replace(/^-/, '')).toFixed(3);
     cryptoCurrency['Monthly Income'] = Number(cryptoCurrency['Registered_coins'][cryptoCurrency['Registered_coins'].length-1]['monthlyIncome'].toString().replace(/^-/, '')).toFixed(3);

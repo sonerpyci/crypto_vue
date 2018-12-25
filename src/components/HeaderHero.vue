@@ -225,7 +225,7 @@ export default {
           this.btc.totalMarketCapUSD = Number(globalData.total_market_cap_usd).toLocaleString()
           this.btc.dominance = Number(globalData.bitcoin_percentage_of_market_cap).toLocaleString()
         })
-      }.bind(this), 60000);
+      }.bind(this), 5000);
     },
     selectFiatCurrency : function(fiatCurrencyEvent) {
       this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent;
@@ -262,7 +262,7 @@ export default {
       let promises = [];
       let responses = [];
       document.getElementsByClassName("overlay")[0].style.display = "block";
-      const countryUrl = 'http://localhost:3000/countries';
+      const countryUrl = 'https://api.masternodeum.com/countries'; //localhost:3000
       promises.push(
         new Promise ( (resolve, reject) => {
           get(countryUrl).then((response) => {
@@ -288,7 +288,7 @@ export default {
         "email":document.getElementById('email').value,
         "country_id":this.selectedCountry.id
       };
-      this.axios.post('http://localhost:3000/subscribers', data)
+      this.axios.post('https://api.masternodeum.com/subscribers', data)
         .then(response => {
           if(response.data.success == true){
             this.div_hide();
